@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sheger Hotel System</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;700;800&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;600&family=Noto+Sans+Ethiopic:wght@400;600&display=swap" rel="stylesheet">
+<style>
+/* VOICE everyday work tool for a busy Addis restaurant floor, shipped-product feel
+   IDEA the restaurant's own paper: order slips on the kitchen rail, thermal receipt at the till, a cash-count sheet for the verifier
+   PICTURE each portal's working surface is the picture: table floor, ticket rail, receipt, count sheet, month bars
+   COLOUR espresso top bar, warm white surfaces, berbere red accent, green for done and verified, turmeric for in progress
+   TYPE Plus Jakarta Sans display, Inter text, IBM Plex Mono on receipts, Noto Sans Ethiopic for Amharic
+   LAYOUT espresso bar with six role tabs; each portal two working columns on a laptop, one column on a phone */
+:root{color-scheme:light dark;--bg:light-dark(#f4f0eb,#140f0c);--card:light-dark(#ffffff,#1f1813);--ink:light-dark(#1d1410,#f3ebe4);--mute:light-dark(#6e6058,#b4a69c);--line:light-dark(#e6ddd4,#3a2e27);--red:light-dark(#c4361d,#ff7a5c);--green:light-dark(#0c7756,#4fd1a5);--gold:light-dark(#9a6410,#f0b44c);--bar:light-dark(#8a6a57,#8f7464);--top:light-dark(#2a1810,#0d0806);--paper:light-dark(#fffdf7,#261d17)}
+:root[data-theme=light]{color-scheme:light}:root[data-theme=dark]{color-scheme:dark}
+*{box-sizing:border-box;min-width:0}
+html,body{margin:0}
+body{background:var(--bg);color:var(--ink);font:16px/1.5 Inter,system-ui,sans-serif;overflow-x:clip}
+.am{font-family:'Noto Sans Ethiopic',Inter,sans-serif}
+button{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--red);outline-offset:2px}
+.top{background:var(--top);color:#f6ece4}
+.bar{display:flex;align-items:center;gap:14px;padding:12px max(3vw,16px) 10px;flex-wrap:wrap}
+.brand{display:flex;align-items:center;gap:10px;margin-right:auto}
+.brand b{font:800 19px 'Plus Jakarta Sans',sans-serif;letter-spacing:-.01em}
+.brand .am{font-size:13px;opacity:.75;display:block;line-height:1.2}
+.clock{font-size:13px;opacity:.8;text-align:right;line-height:1.35}
+.roles{display:flex;gap:6px;overflow-x:auto;padding:0 max(3vw,16px) 12px;scrollbar-width:none}
+.rt{flex:none;display:flex;align-items:center;gap:10px;min-height:48px;padding:6px 14px;border-radius:12px;border:1px solid rgba(255,255,255,.16);background:transparent;cursor:pointer;text-align:left;color:#f3e7dd}
+.rt:hover{background:rgba(255,255,255,.08)}
+.rt b{display:block;font-size:14px;font-weight:600}
+.rt small{display:block;font-size:12px;opacity:.7}
+.rt[aria-pressed=true]{background:#fff;color:#2a1810;border-color:#fff}
+.badge{background:#e2442a;color:#fff;border-radius:99px;font-size:12px;font-weight:600;padding:1px 8px}
+.wrap{max-width:1320px;margin:0 auto;padding:22px max(3vw,16px) 28px}
+.vh{display:flex;justify-content:space-between;align-items:flex-end;gap:14px;flex-wrap:wrap;margin-bottom:18px}
+h1{font:800 clamp(26px,3.2vw,36px)/1.08 'Plus Jakarta Sans',sans-serif;letter-spacing:-.02em;margin:0;text-wrap:balance}
+h2{font:700 17px/1.3 'Plus Jakarta Sans',sans-serif;margin:0}
+h3{font:700 15px/1.3 'Plus Jakarta Sans',sans-serif;margin:20px 0 10px}
+.sub{color:var(--mute);margin:4px 0 0;font-size:15px}
+.fine{color:var(--mute);font-size:13px;margin:6px 0 0}
+.grid2{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);gap:18px;align-items:start}
+.gridv{display:grid;grid-template-columns:minmax(0,.75fr) minmax(0,1.6fr);gap:18px;align-items:start}
+.gridm{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,320px),1fr));gap:18px;align-items:start}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:18px}
+.ch{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-bottom:12px}
+.chip{display:inline-flex;align-items:center;font-size:12px;font-weight:600;padding:3px 9px;border-radius:99px;white-space:nowrap}
+.s-free{background:color-mix(in srgb,var(--mute) 14%,transparent);color:var(--mute)}
+.s-ord{background:color-mix(in srgb,var(--ink) 9%,transparent);color:var(--ink)}
+.s-kit{background:color-mix(in srgb,var(--gold) 16%,transparent);color:var(--gold)}
+.s-rdy{background:var(--red);color:#fff}
+.s-eat{background:color-mix(in srgb,var(--green) 15%,transparent);color:var(--green)}
+.s-bill{background:var(--ink);color:var(--card)}
+.btn{min-height:44px;padding:0 16px;border-radius:12px;border:1px solid var(--line);background:var(--card);font-weight:600;font-size:15px;cursor:pointer;white-space:nowrap}
+.btn:hover{border-color:var(--mute)}
+.btn.pri{background:var(--red);border-color:var(--red);color:#fff}
+.btn.ok{background:var(--green);border-color:var(--green);color:#fff}
+.btn.sm{min-height:38px;font-size:14px;padding:0 12px}
+.btn.wide{width:100%;margin-top:12px}
+.btn:disabled,.ib:disabled{opacity:.4;cursor:not-allowed}
+.acts{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
+.pill{min-height:40px;padding:0 14px;border-radius:99px;border:1px solid var(--line);background:var(--card);cursor:pointer;font-size:14px;font-weight:500}
+.pill[aria-pressed=true]{background:var(--ink);color:var(--card);border-color:var(--ink)}
+.ib{width:40px;height:40px;border-radius:12px;border:1px solid var(--line);background:var(--card);cursor:pointer;font-size:20px;line-height:1;display:grid;place-items:center;flex:none}
+.ib.add{background:var(--red);border-color:var(--red);color:#fff}
+.alert{display:grid;gap:8px;margin-bottom:16px}
+.al{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;background:color-mix(in srgb,var(--red) 10%,var(--card));border:1px solid color-mix(in srgb,var(--red) 35%,transparent);border-radius:14px;padding:10px 14px}
+.tables{display:grid;grid-template-columns:repeat(auto-fill,minmax(118px,1fr));gap:10px}
+.tb{border:1px solid var(--line);border-radius:14px;padding:12px;background:var(--bg);text-align:left;cursor:pointer;min-height:104px;display:flex;flex-direction:column;align-items:flex-start;gap:6px}
+.tb:hover{border-color:var(--mute)}
+.tb[aria-pressed=true]{outline:2px solid var(--red);outline-offset:1px;background:var(--card)}
+.tb .num{font:800 28px/1 'Plus Jakarta Sans',sans-serif}
+.tb .tw{font-size:13px;color:var(--mute)}
+.ln,.mi{display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid var(--line)}
+.ln>div:first-child,.mi .mn{flex:1}
+.mn b{display:block;font-weight:600}
+.mi .am{font-size:13px;color:var(--mute)}
+.mi.so b{text-decoration:line-through;color:var(--mute)}
+.amt{white-space:nowrap;font-variant-numeric:tabular-nums;text-align:right;min-width:5.5em}
+.step{display:flex;align-items:center;gap:8px}
+.step span{min-width:1.4em;text-align:center;font-weight:600}
+.q{color:var(--mute);white-space:nowrap}
+.tot{display:flex;justify-content:space-between;padding-top:12px;font-size:17px}
+.empty{color:var(--mute);padding:14px 0;margin:0}
+.cats{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:6px}
+.rail{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px;align-items:start}
+.col{background:color-mix(in srgb,var(--ink) 5%,transparent);border-radius:16px;padding:12px;min-height:220px}
+.col>.ch{margin:2px 4px 12px}
+.slip{background:var(--paper);border:1px solid var(--line);border-top:3px dashed var(--line);border-radius:4px 4px 12px 12px;padding:14px;margin-bottom:12px}
+.slip .sh{display:flex;justify-content:space-between;align-items:baseline;gap:8px}
+.slip .tn{font:800 24px 'Plus Jakarta Sans',sans-serif}
+.slip ul{margin:10px 0 12px;padding:0;list-style:none;font-family:'IBM Plex Mono',monospace;font-size:15px}
+.slip li{padding:3px 0}
+.slip li b{display:inline-block;min-width:2.2em}
+.timer{font:600 15px 'IBM Plex Mono',monospace;white-space:nowrap}
+.timer.late{color:var(--red)}
+.paygrid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:18px;margin-top:16px}
+.rcpt{background:var(--paper);border:1px solid var(--line);border-radius:6px;padding:16px;font-family:'IBM Plex Mono',monospace;font-size:14px}
+.rc-h{text-align:center;border-bottom:1px dashed var(--mute);padding-bottom:10px;margin-bottom:8px;display:grid;gap:2px}
+.rc-h b{font-size:16px}
+.rc-r{display:flex;justify-content:space-between;gap:10px;padding:3px 0}
+.rc-r span:last-child{white-space:nowrap}
+.rc-sep{border-top:1px dashed var(--mute);margin:8px 0}
+.rc-r.big{font-size:18px;font-weight:600}
+label{display:block;font-size:14px;font-weight:600;margin:14px 0 6px}
+input,textarea{width:100%;font:16px Inter,sans-serif;color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:12px;padding:10px 12px;min-height:44px}
+input:focus,textarea:focus{border-color:var(--red);outline:none}
+.seg{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px}
+.seg .pill{padding:0 6px}
+.quick{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}
+.chg{margin-top:10px;font-size:16px;min-height:24px}
+.err{color:var(--red);font-size:14px;margin:8px 0 0;min-height:1px}
+.warn{color:var(--red)}
+.rows{display:grid}
+.rw{display:flex;justify-content:space-between;gap:10px;padding:8px 0;border-bottom:1px solid var(--line)}
+.rw span:last-child{white-space:nowrap;font-variant-numeric:tabular-nums}
+.rw.st{font-weight:700}
+.list{display:grid;gap:8px}
+.li{display:flex;justify-content:space-between;align-items:center;gap:10px;text-align:left;width:100%;border:1px solid var(--line);background:var(--bg);border-radius:12px;padding:12px;cursor:pointer}
+.li[aria-pressed=true]{outline:2px solid var(--red);background:var(--card)}
+.li small{display:block;color:var(--mute);font-size:13px}
+.cmp{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.cmp>div{background:var(--bg);border-radius:12px;padding:12px}
+.cmp span{display:block;font-size:13px;color:var(--mute)}
+.cmp b{font:800 clamp(18px,2.2vw,24px) 'Plus Jakarta Sans',sans-serif;white-space:nowrap}
+.cmp small{display:block;font-size:12px;color:var(--mute)}
+table{border-collapse:collapse;width:100%;font-size:15px}
+th{font-size:13px;color:var(--mute);font-weight:600;text-align:left;padding:8px 6px;border-bottom:1px solid var(--line)}
+td{padding:6px;border-bottom:1px solid var(--line)}
+.r{text-align:right;white-space:nowrap;font-variant-numeric:tabular-nums}
+.den input{max-width:110px;text-align:right;min-height:40px;padding:6px 10px}
+.note{display:inline-block;min-width:3.4em;text-align:center;font-weight:700;border-radius:6px;padding:4px 8px;font-size:14px}
+.n200{background:#e6d7f3;color:#4b2a6b}.n100{background:#dcebd7;color:#24502a}.n50{background:#f4dccd;color:#7a3416}.n10{background:#f3e3b8;color:#6a4b06}.n5,.n1{background:#e3e3e0;color:#3b3b38}
+.scroll{overflow-x:auto}
+.ok-t{color:var(--green);font-weight:600}
+.bad-t{color:var(--red);font-weight:600}
+.vd{border-radius:14px;padding:14px;margin-top:18px;background:color-mix(in srgb,var(--ink) 6%,transparent)}
+.vd.ok{background:color-mix(in srgb,var(--green) 14%,var(--card))}
+.vd.bad{background:color-mix(in srgb,var(--red) 12%,var(--card))}
+.vrow{display:flex;justify-content:space-between;gap:10px;padding:2px 0}
+.vbig{font:800 clamp(24px,3vw,32px)/1.1 'Plus Jakarta Sans',sans-serif;margin-top:8px}
+.vd.ok .vbig{color:var(--green)}.vd.bad .vbig{color:var(--red)}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,11em),1fr));gap:12px;margin-bottom:18px}
+.kpi{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:14px 16px}
+.kpi span{font-size:14px;color:var(--mute)}
+.kpi b{display:block;font:800 clamp(24px,2.8vw,32px)/1.15 'Plus Jakarta Sans',sans-serif;white-space:nowrap}
+.kpi small{font-size:13px;color:var(--mute)}
+.br{display:grid;grid-template-columns:minmax(6em,8.5em) minmax(0,1fr) 8.6em;gap:10px;align-items:center;padding:6px 0}
+.br .tr{height:12px;border-radius:99px;background:color-mix(in srgb,var(--mute) 15%,transparent);overflow:hidden}
+.br .fl{height:100%;border-radius:99px;background:var(--bar)}
+.br .fl.a{background:var(--red)}
+.br>span:last-child{text-align:right;white-space:nowrap;font-variant-numeric:tabular-nums;font-size:14px}
+.tog{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:6px 0;border-bottom:1px solid var(--line)}
+.sw{width:52px;height:30px;border-radius:99px;border:0;background:var(--green);position:relative;cursor:pointer;flex:none}
+.sw::after{content:'';position:absolute;top:3px;left:25px;width:24px;height:24px;border-radius:50%;background:#fff;transition:left .15s}
+.sw[aria-checked=false]{background:color-mix(in srgb,var(--mute) 40%,transparent)}
+.sw[aria-checked=false]::after{left:3px}
+.log{font-size:14px;max-height:300px;overflow:auto}
+.log div{padding:7px 0;border-bottom:1px solid var(--line)}
+.log time{color:var(--mute);font-variant-numeric:tabular-nums;margin-right:8px}
+.fig{position:relative;height:300px}
+.fig>svg{position:absolute;inset:0;width:100%;height:100%}
+.gl{stroke:var(--line)}
+.ax{fill:var(--mute);font-size:12px;font-family:Inter,sans-serif}
+.bb{fill:var(--bar)}.bt{fill:var(--red)}
+.modal{position:fixed;inset:0;background:rgba(20,10,5,.55);display:grid;place-items:center;padding:16px;z-index:50}
+.dlg{background:var(--card);border-radius:18px;max-width:460px;width:100%;max-height:88vh;overflow:auto;padding:22px}
+.rpt{font:14px/1.55 'IBM Plex Mono',monospace;background:var(--paper);border:1px solid var(--line);border-radius:8px;padding:14px;white-space:pre-wrap;margin:12px 0 0}
+#toasts{position:fixed;right:16px;bottom:16px;display:grid;gap:8px;z-index:60;max-width:min(360px,calc(100vw - 32px))}
+.toast{background:var(--ink);color:var(--card);padding:12px 16px;border-radius:12px;font-size:15px;animation:up .25s ease-out}
+.toast.ok{background:var(--green);color:#fff}
+.toast.bad{background:var(--red);color:#fff}
+@keyframes up{from{transform:translateY(10px);opacity:0}}
+@media(prefers-reduced-motion:reduce){.toast{animation:none}.sw::after{transition:none}}
+footer{max-width:1320px;margin:0 auto;padding:0 max(3vw,16px) 40px;color:var(--mute);font-size:14px}
+footer details{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:12px 16px;margin-bottom:10px}
+footer summary{cursor:pointer;font-weight:600;color:var(--ink)}
+footer ol{margin:10px 0 4px;padding-left:20px;line-height:1.7}
+@media(max-width:900px){.grid2,.gridv,.rail{grid-template-columns:minmax(0,1fr)}}
+@media(max-width:640px){.paygrid{grid-template-columns:minmax(0,1fr)}.seg{grid-template-columns:repeat(2,minmax(0,1fr))}.cmp{grid-template-columns:minmax(0,1fr)}.clock{display:none}.card{padding:14px}}
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="bar">
+    <div class="brand">
+      <svg width="34" height="34" viewBox="0 0 32 32" aria-hidden="true"><circle cx="15" cy="20" r="9" fill="#e2442a"/><rect x="12.5" y="4" width="5" height="11" rx="2" fill="#e2442a"/><path d="M23 15 L29 9" stroke="#e2442a" stroke-width="2.6" stroke-linecap="round"/><circle cx="12" cy="18" r="2.2" fill="#ffb29e"/></svg>
+      <div><b>Sheger Hotel</b><span class="am">ሸገር ሆቴል · Control system</span></div>
+    </div>
+    <div class="clock"><span id="clk"></span><br><span class="am">ሐሙስ ህዳር 17, 2019</span> · Thu 26 Nov 2026</div>
+  </div>
+  <nav class="roles" id="roles" aria-label="Portals"></nav>
+</header>
+<main class="wrap" id="view"></main>
+<footer>
+  <details>
+    <summary>Demo walkthrough for the client meeting</summary>
+    <ol>
+      <li>Waitress: open Table 11, press Send to kitchen. Serve Table 7, which is already ready.</li>
+      <li>Kitchen: start Table 11, then mark it ready. The Waitress tab lights up.</li>
+      <li>Waitress: mark Table 11 served, then Request bill.</li>
+      <li>Cashier: take Table 11 by Telebirr with a transaction number, then close the shift.</li>
+      <li>Verifier: open the morning shift, check statements, see the Br 250 shortage, flag it to the owner.</li>
+      <li>Manager: open the daily report. Owner: see the month and the flagged shift.</li>
+    </ol>
+  </details>
+  Sample data for the demo: the hotel, staff, prices and amounts are made up.
+</footer>
+<div id="modal"></div>
+<div id="toasts" aria-live="polite"></div>
+<script>
+{
+const $=s=>document.querySelector(s);
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const br=n=>'Br '+Math.round(n).toLocaleString('en-US');
+const sgn=n=>n===0?'Br 0':(n<0?'− ':'+ ')+br(Math.abs(n));
+const shortBr=n=>n>=1e6?'Br '+(n/1e6).toFixed(2)+'M':'Br '+Math.round(n/1000)+'k';
+const pad=n=>String(n).padStart(2,'0');
+const hm=d=>pad(d.getHours())+':'+pad(d.getMinutes());
+const now=()=>hm(new Date());
+const MIN=60000;
+
+const MENU=[
+{id:'tibs',n:'Special tibs',a:'ልዩ ጥብስ',p:650,c:'Ethiopian'},
+{id:'kitfo',n:'Kitfo',a:'ክትፎ',p:750,c:'Ethiopian'},
+{id:'doro',n:'Doro wot',a:'ዶሮ ወጥ',p:900,c:'Ethiopian'},
+{id:'shiro',n:'Shiro',a:'ሽሮ',p:280,c:'Ethiopian'},
+{id:'beya',n:'Beyaynetu',a:'በያይነቱ',p:350,c:'Ethiopian'},
+{id:'firfir',n:'Firfir',a:'ፍርፍር',p:300,c:'Ethiopian'},
+{id:'pasta',n:'Pasta bolognese',p:380,c:'International'},
+{id:'burger',n:'Beef burger',p:520,c:'International'},
+{id:'club',n:'Club sandwich',p:450,c:'International'},
+{id:'buna',n:'Buna',a:'ቡና',p:50,c:'Drinks'},
+{id:'mac',n:'Macchiato',a:'ማኪያቶ',p:70,c:'Drinks'},
+{id:'shai',n:'Shai',a:'ሻይ',p:40,c:'Drinks'},
+{id:'avo',n:'Avocado juice',p:150,c:'Drinks'},
+{id:'ambo',n:'Sparkling water',p:60,c:'Drinks'},
+{id:'beer',n:'Draft beer',p:110,c:'Drinks'}];
+const M=Object.fromEntries(MENU.map(m=>[m.id,m]));
+const PM=[{id:'cash',n:'Cash'},{id:'telebirr',n:'Telebirr'},{id:'cbe',n:'CBE Birr'},{id:'card',n:'Card'}];
+const PMN=Object.fromEntries(PM.map(p=>[p.id,p.n]));
+const DEN=[200,100,50,10,5,1];
+const ROLES=[{id:'waiter',n:'Waitress',p:'Hana'},{id:'kitchen',n:'Kitchen',p:'Chef Dawit'},{id:'cashier',n:'Cashier',p:'Selam'},{id:'verifier',n:'Verifier',p:'Abel'},{id:'manager',n:'Manager',p:'Tsion'},{id:'owner',n:'Owner',p:'Ato Bekele'}];
+const ST={free:['Free','s-free'],ordering:['Taking order','s-ord'],kitchen:['In kitchen','s-kit'],ready:['Ready to serve','s-rdy'],eating:['Eating','s-eat'],bill:['Bill requested','s-bill']};
+const TKS={new:['New','s-ord'],cooking:['Cooking','s-kit'],ready:['Ready','s-rdy'],served:['Served','s-eat']};
+const SHS={open:['Open','s-ord'],pending:['Needs check','s-rdy'],verified:['Verified','s-eat'],flagged:['Flagged','s-bill']};
+const chip=(m,k)=>`<span class="chip ${m[k][1]}">${m[k][0]}</span>`;
+
+const T0=Date.now();
+const S={role:'waiter',table:11,cat:'Ethiopian',bill:null,method:'cash',cashIn:'',ref:'',vshift:'m1',soldOut:{club:false},modal:null,copy:'',seq:107,
+ tables:[1,2,3,4,5,6,7,8,9,10,11,12],orders:{},tickets:[],
+ items:{tibs:4,kitfo:2,doro:1,shiro:5,beya:3,firfir:4,pasta:1,burger:2,club:1,buna:20,mac:26,shai:12,avo:5,ambo:6,beer:2},
+ log:[{t:'15:15',w:'Selam',x:'Took Table 4 in cash, Br 552'},{t:'14:46',w:'Selam',x:'Took Table 6 by Telebirr, Br 1,104'},{t:'14:00',w:'Selam',x:'Opened afternoon shift with float Br 2,000'},{t:'14:00',w:'Meron',x:'Closed morning shift, declared Br 9,893 cash'},{t:'11:02',w:'Tsion',x:'Approved void: 1 Beef burger on Table 4, wrong order'},{t:'07:00',w:'Meron',x:'Opened morning shift with float Br 2,000'}],
+ shifts:[]};
+S.soldOut={};
+function mk(t,w,lines,tk,st,ago,bill){
+ S.orders[t]={waiter:w,billReq:!!bill,items:lines.map(([m,q])=>({mid:m,qty:q,tk}))};
+ if(tk)S.tickets.push({id:tk,table:t,waiter:w,items:lines,st,ts:T0-ago*MIN});
+}
+mk(2,'Liya',[['buna',2],['firfir',2]],'K101','served',38);
+mk(3,'Marta',[['tibs',1],['shiro',2],['beer',2]],'K102','served',52,true);
+mk(12,'Marta',[['tibs',2],['ambo',2]],'K103','served',44,true);
+mk(5,'Hana',[['kitfo',1],['beya',2],['mac',3]],'K104','cooking',9);
+mk(7,'Hana',[['doro',1],['avo',2]],'K105','ready',17);
+mk(9,'Liya',[['burger',2],['pasta',1]],'K106','new',2);
+mk(11,'Hana',[['club',1],['shai',2]],null);
+
+const WS=['Hana','Liya','Marta'];
+const mp=[['07:24','cash',345],['07:58','telebirr',621,'TB7K2M9QX1'],['08:31','cash',1035],['08:55','cbe',1966,'FT26330K8P4L'],['09:40','cash',483],['10:12','telebirr',1265,'TB7K3A1ZR8'],['10:47','cash',2381],['11:20','card',3105,'POS 004112'],['11:52','cash',889],['12:15','telebirr',1449,'TB7K4D6NW2'],['12:40','cash',1794],['13:05','cbe',2208,'FT26330M2Q7C'],['13:28','cash',966],['13:51','telebirr',759,'TB7K5H0YT6']];
+S.shifts=[
+ {id:'m1',name:'Morning shift',when:'Today',today:true,cashier:'Meron',start:'07:00',end:'14:00',float:2000,st:'pending',declared:9893,denoms:{200:40,100:12,50:9,10:8,5:2,1:3},checked:false,stmt:{TB7K3A1ZR8:1165},note:'',
+  payments:mp.map((p,i)=>({t:p[0],m:p[1],amt:p[2],ref:p[3]||'',w:WS[i%3],table:(i*5)%12+1}))},
+ {id:'a1',name:'Afternoon shift',when:'Today',today:true,cashier:'Selam',start:'14:00',end:null,float:2000,st:'open',denoms:{},checked:false,stmt:{},note:'',
+  payments:[{t:'14:20',m:'cash',amt:759,ref:'',w:'Liya',table:1},{t:'14:46',m:'telebirr',amt:1104,ref:'TB7K6P3LS5',w:'Marta',table:6},{t:'15:15',m:'cash',amt:552,ref:'',w:'Hana',table:4}]},
+ {id:'y3',name:'Evening shift',when:'Wed 25 Nov',cashier:'Selam',start:'14:00',end:'22:00',float:2000,st:'verified',summary:{cash:11240,telebirr:6980,cbe:3120,card:2450},counted:13240,variance:0,verifier:'Abel',note:'Count matched. All Telebirr references found.'},
+ {id:'y2',name:'Morning shift',when:'Wed 25 Nov',cashier:'Meron',start:'07:00',end:'14:00',float:2000,st:'verified',summary:{cash:8120,telebirr:5310,cbe:2960,card:1880},counted:10120,variance:0,verifier:'Abel',note:''}];
+
+const tkt=id=>S.tickets.find(k=>k.id===id);
+const itemsTxt=ls=>ls.map(([m,q])=>(q>1?q+' × ':'')+M[m].n).join(', ');
+function tstat(t){const o=S.orders[t];if(!o||!o.items.length)return'free';if(o.billReq)return'bill';if(o.items.some(l=>!l.tk))return'ordering';const s=o.items.map(l=>tkt(l.tk).st);if(s.includes('ready'))return'ready';if(s.some(x=>x==='new'||x==='cooking'))return'kitchen';return'eating'}
+function calc(o){const sub=o.items.reduce((s,l)=>s+M[l.mid].p*l.qty,0),svc=Math.round(sub*.1),vat=Math.round((sub+svc)*.15);return{sub,svc,vat,tot:sub+svc+vat}}
+const openShift=()=>S.shifts.find(s=>s.st==='open');
+const vsh=()=>S.shifts.find(s=>s.id===S.vshift);
+function totals(sh){const t=sh.summary?{...sh.summary}:{cash:0,telebirr:0,cbe:0,card:0};if(!sh.summary)sh.payments.forEach(p=>t[p.m]+=p.amt);t.all=t.cash+t.telebirr+t.cbe+t.card;return t}
+const counted=sh=>DEN.reduce((s,d)=>s+d*(+sh.denoms[d]||0),0);
+const stmtAmt=(sh,p)=>sh.stmt[p.ref]??p.amt;
+const digDiff=sh=>sh.payments.filter(p=>p.m!=='cash').reduce((s,p)=>s+stmtAmt(sh,p)-p.amt,0);
+const todayPays=()=>S.shifts.filter(s=>s.today).flatMap(s=>s.payments);
+const sum=a=>a.reduce((s,x)=>s+x,0);
+function log(w,x){S.log.unshift({t:now(),w,x})}
+function toast(m,k=''){const d=document.createElement('div');d.className='toast '+k;d.textContent=m;const tw=$('#toasts');tw.append(d);while(tw.children.length>2)tw.firstChild.remove();setTimeout(()=>d.remove(),3400)}
+const rw=(a,b,c='')=>`<div class="rw ${c}"><span>${a}</span><span>${b}</span></div>`;
+const bars=(rows,acc)=>{const mx=Math.max(1,...rows.map(r=>r[1]));return rows.map((r,i)=>`<div class="br"><span>${esc(r[0])}</span><div class="tr"><div class="fl${i===acc?' a':''}" style="width:${(r[1]/mx*100).toFixed(1)}%"></div></div><span>${r[2]??br(r[1])}</span></div>`).join('')};
+
+function vWaiter(){
+ const ready=S.tickets.filter(k=>k.st==='ready');
+ const t=S.table,o=S.orders[t]||{items:[],waiter:'Hana'},st=tstat(t),c=calc(o);
+ const unsent=o.items.some(l=>!l.tk);
+ const served=o.items.length&&o.items.every(l=>l.tk&&tkt(l.tk).st==='served');
+ return `<div class="vh"><div><h1>Floor and orders</h1><p class="sub">Hana, waitress. Pick a table, add items, send to the kitchen.</p></div><span class="sub">${S.tables.filter(x=>tstat(x)!=='free').length} of 12 tables busy</span></div>
+ ${ready.length?`<div class="alert">${ready.map(k=>`<div class="al"><span><b>Table ${k.table} is ready</b> · ${esc(itemsTxt(k.items))}</span><button class="btn ok sm" data-a="serve" data-v="${k.id}">Mark served</button></div>`).join('')}</div>`:''}
+ <div class="grid2">
+ <section class="card"><div class="ch"><h2>Tables</h2></div>
+ <div class="tables">${S.tables.map(x=>{const oo=S.orders[x];return `<button class="tb" data-a="table" data-v="${x}" aria-pressed="${x===t}"><span class="num">${x}</span>${chip(ST,tstat(x))}<span class="tw">${oo&&oo.items.length?esc(oo.waiter)+' · '+br(calc(oo).sub):'Open'}</span></button>`}).join('')}</div></section>
+ <section class="card"><div class="ch"><h2>Table ${t}</h2>${chip(ST,st)}</div>
+ <p class="fine">${o.items.length?'Waiter '+esc(o.waiter):'Free table. Add items from the menu to open an order.'}</p>
+ <div>${o.items.map((l,i)=>`<div class="ln"><div><b>${esc(M[l.mid].n)}</b> ${l.tk?chip(TKS,tkt(l.tk).st):''}</div>${l.tk?`<span class="q">× ${l.qty}</span>`:`<div class="step"><button class="ib" data-a="dec" data-v="${i}" aria-label="One less">−</button><span>${l.qty}</span><button class="ib" data-a="inc" data-v="${i}" aria-label="One more">+</button></div>`}<span class="amt">${br(M[l.mid].p*l.qty)}</span></div>`).join('')||'<p class="empty">No items yet.</p>'}</div>
+ <div class="tot"><span>Subtotal</span><b>${br(c.sub)}</b></div>
+ <p class="fine">Service 10% and VAT 15% are added at the cashier.</p>
+ <div class="acts"><button class="btn pri" data-a="send" ${unsent?'':'disabled'}>Send to kitchen</button><button class="btn" data-a="reqbill" ${served&&!o.billReq?'':'disabled'}>${o.billReq?'Bill sent to cashier':'Request bill'}</button></div>
+ <h3>Menu</h3><div class="cats">${['Ethiopian','International','Drinks'].map(x=>`<button class="pill" data-a="cat" data-v="${x}" aria-pressed="${x===S.cat}">${x}</button>`).join('')}</div>
+ ${MENU.filter(m=>m.c===S.cat).map(m=>{const so=S.soldOut[m.id];return `<div class="mi${so?' so':''}"><div class="mn"><b>${esc(m.n)}</b>${m.a?`<span class="am">${m.a}</span>`:''}</div><span class="amt">${so?'Sold out':br(m.p)}</span><button class="ib add" data-a="add" data-v="${m.id}" aria-label="Add ${esc(m.n)}" ${so||o.billReq?'disabled':''}>+</button></div>`}).join('')}
+ </section></div>`;
+}
+
+function vKitchen(){
+ const col=(st,title)=>{const ks=S.tickets.filter(k=>k.st===st).sort((a,b)=>a.ts-b.ts);return `<div class="col"><div class="ch"><h2>${title}</h2><span class="chip ${TKS[st][1]}">${ks.length}</span></div>${ks.map(k=>`<article class="slip"><div class="sh"><span class="tn">Table ${k.table}</span><span class="timer" data-ts="${k.ts}"></span></div><span class="fine">${esc(k.waiter)} · ticket ${k.id}</span><ul>${k.items.map(([m,q])=>`<li><b>${q}×</b>${esc(M[m].n)}${M[m].a?` <span class="am">${M[m].a}</span>`:''}</li>`).join('')}</ul>${st==='new'?`<button class="btn wide" data-a="kstart" data-v="${k.id}">Start cooking</button>`:st==='cooking'?`<button class="btn ok wide" data-a="kready" data-v="${k.id}">Mark ready</button>`:`<p class="fine">Waiting for ${esc(k.waiter)} to pick up.</p>`}</article>`).join('')||'<p class="empty">Nothing here.</p>'}</div>`};
+ return `<div class="vh"><div><h1>Kitchen tickets</h1><p class="sub">Chef Dawit. Tickets turn red after 15 minutes.</p></div><span class="sub">Average ticket today: 14 min</span></div>
+ <div class="rail">${col('new','New')}${col('cooking','Cooking')}${col('ready','Ready')}</div>`;
+}
+
+function vCashier(){
+ const bills=S.tables.filter(t=>S.orders[t]&&S.orders[t].billReq);
+ if(!bills.includes(S.bill))S.bill=bills[0]??null;
+ const sh=openShift(),tt=totals(sh);
+ let pay='';
+ if(S.bill!=null){const o=S.orders[S.bill],c=calc(o),q=[...new Set([c.tot,Math.ceil(c.tot/100)*100,Math.ceil(c.tot/500)*500,Math.ceil(c.tot/1000)*1000])];
+ pay=`<div class="paygrid"><div class="rcpt"><div class="rc-h"><b>Sheger Hotel</b><span class="am">ሸገር ሆቴል</span><span>Table ${S.bill} · ${esc(o.waiter)} · ${now()}</span></div>
+ ${o.items.map(l=>`<div class="rc-r"><span>${l.qty} × ${esc(M[l.mid].n)}</span><span>${br(M[l.mid].p*l.qty)}</span></div>`).join('')}
+ <div class="rc-sep"></div><div class="rc-r"><span>Subtotal</span><span>${br(c.sub)}</span></div><div class="rc-r"><span>Service 10%</span><span>${br(c.svc)}</span></div><div class="rc-r"><span>VAT 15%</span><span>${br(c.vat)}</span></div><div class="rc-sep"></div><div class="rc-r big"><span>Total</span><span>${br(c.tot)}</span></div></div>
+ <div><h2>Payment</h2><div class="seg" style="margin-top:10px">${PM.map(m=>`<button class="pill" data-a="method" data-v="${m.id}" aria-pressed="${S.method===m.id}">${m.n}</button>`).join('')}</div>
+ ${S.method==='cash'?`<label for="cashIn">Cash received</label><input id="cashIn" inputmode="numeric" value="${esc(S.cashIn)}" placeholder="Amount in birr"><div class="quick">${q.map(v=>`<button class="pill" data-a="qcash" data-v="${v}">${br(v)}</button>`).join('')}</div><div class="chg" id="chg"></div>`
+ :`<label for="ref">${PMN[S.method]} ${S.method==='card'?'slip number':'transaction number'}</label><input id="ref" value="${esc(S.ref)}" autocomplete="off" placeholder="${S.method==='telebirr'?'e.g. TB7K8M2QX4':S.method==='cbe'?'e.g. FT26330A1B2C':'e.g. POS 004127'}"><p class="fine">Copy it from the customer's payment SMS or the POS slip. The verifier checks it against the statement.</p>`}
+ <p class="err" id="perr"></p><button class="btn pri wide" data-a="pay">Confirm ${br(c.tot)}</button></div></div>`}
+ return `<div class="vh"><div><h1>Cashier</h1><p class="sub">Selam. Take payment for requested bills, then close the shift.</p></div></div>
+ <div class="grid2"><section class="card"><div class="ch"><h2>Bills waiting</h2><span class="chip s-bill">${bills.length}</span></div>
+ <div class="list">${bills.map(t=>{const o=S.orders[t];return `<button class="li" data-a="bill" data-v="${t}" aria-pressed="${t===S.bill}"><span><b>Table ${t}</b><small>${esc(o.waiter)} · ${o.items.reduce((s,l)=>s+l.qty,0)} items</small></span><b class="amt">${br(calc(o).tot)}</b></button>`}).join('')||'<p class="empty">No bills waiting. When a waitress presses Request bill, it shows up here.</p>'}</div>${pay}</section>
+ <section class="card"><div class="ch"><h2>${sh.name}</h2>${chip(SHS,'open')}</div><p class="fine">${sh.cashier} · since ${sh.start}</p>
+ <div class="rows">${rw('Opening float',br(sh.float))}${rw('Cash sales',br(tt.cash))}${rw('Expected in drawer',br(sh.float+tt.cash),'st')}${rw('Telebirr',br(tt.telebirr))}${rw('CBE Birr',br(tt.cbe))}${rw('Card',br(tt.card))}${rw('Total sales · '+sh.payments.length+' bills',br(tt.all),'st')}</div>
+ <h3>Latest payments</h3><div class="rows">${sh.payments.slice(-5).reverse().map(p=>rw(`${p.t} · Table ${p.table} · ${PMN[p.m]}`,br(p.amt))).join('')||'<p class="empty">None yet.</p>'}</div>
+ <button class="btn wide" data-a="closeShift">Close shift and send to verifier</button></section></div>`;
+}
+function updChg(){const el=$('#chg');if(!el||S.bill==null)return;const c=calc(S.orders[S.bill]),g=+S.cashIn;el.innerHTML=!g?'':g>=c.tot?`Change to give: <b>${br(g-c.tot)}</b>`:`<span class="warn">Short by ${br(c.tot-g)}</span>`}
+
+function verdict(sh){const tt=totals(sh),exp=sh.float+tt.cash,cnt=counted(sh),dc=cnt-exp,dd=sh.checked?digDiff(sh):0,ready=cnt>0&&sh.checked,v=dc+dd;
+ return `<div class="vd ${ready?(v===0?'ok':'bad'):''}"><div class="vrow"><span>Cash: counted minus expected</span><b>${cnt?sgn(dc):'Count first'}</b></div><div class="vrow"><span>Digital: statement minus system</span><b>${sh.checked?sgn(dd):'Not checked yet'}</b></div><div class="vbig">${!ready?'Waiting for count and check':v===0?'Balanced':(v<0?'Short ':'Over ')+br(Math.abs(v))}</div></div>
+ <label for="vnote">Note to owner</label><textarea id="vnote" rows="2" placeholder="What did the cashier say?">${esc(sh.note)}</textarea>
+ <div class="acts"><button class="btn ok" data-a="vapprove" ${ready?'':'disabled'}>${ready&&v!==0?'Approve anyway':'Approve shift'}</button><button class="btn pri" data-a="vflag" ${ready?'':'disabled'}>Flag to owner</button></div>`}
+function vVerifier(){
+ const ord={pending:0,open:1,flagged:2,verified:3};
+ const list=[...S.shifts].sort((a,b)=>ord[a.st]-ord[b.st]);
+ const sh=vsh(),tt=totals(sh);let d='';
+ if(sh.st==='pending'){const exp=sh.float+tt.cash,dig=sh.payments.filter(p=>p.m!=='cash');
+ d=`<p class="fine">Cashier ${sh.cashier} · ${sh.start} to ${sh.end} · ${sh.payments.length} bills · ${br(tt.all)} in sales</p>
+ <h3>Cash in the drawer</h3><div class="cmp"><div><span>System expects</span><b>${br(exp)}</b><small>float ${br(sh.float)} + cash ${br(tt.cash)}</small></div><div><span>Cashier declared</span><b>${br(sh.declared)}</b><small>when closing</small></div><div><span>You counted</span><b id="vcount">${br(counted(sh))}</b><small>from the notes below</small></div></div>
+ <div class="scroll"><table class="den" style="margin-top:10px"><thead><tr><th>Note or coin</th><th>Pieces</th><th class="r">Amount</th></tr></thead><tbody>${DEN.map(n=>`<tr><td><span class="note n${n}">${n}</span></td><td><input id="d${n}" inputmode="numeric" value="${esc(sh.denoms[n]??'')}" aria-label="${n} birr pieces"></td><td class="r" id="dv${n}">${br(n*(+sh.denoms[n]||0))}</td></tr>`).join('')}</tbody></table></div>
+ <h3>Telebirr, CBE Birr and card</h3><button class="btn" data-a="vcheck" ${sh.checked?'disabled':''}>${sh.checked?'Checked against statements':'Check against statements'}</button>
+ <div class="scroll" style="margin-top:10px"><table><thead><tr><th>Time</th><th>Method</th><th>Reference</th><th class="r">System</th><th class="r">Statement</th><th>Result</th></tr></thead><tbody>${dig.map(p=>{const s=stmtAmt(sh,p);return `<tr><td>${p.t}</td><td>${PMN[p.m]}</td><td style="font-family:'IBM Plex Mono',monospace;font-size:14px">${esc(p.ref)}</td><td class="r">${br(p.amt)}</td><td class="r">${sh.checked?br(s):'·'}</td><td>${sh.checked?(s===p.amt?'<span class="ok-t">Match</span>':`<span class="bad-t">${sgn(s-p.amt)}</span>`):'<span class="fine">Not checked</span>'}</td></tr>`}).join('')}</tbody></table></div>
+ <div id="vverdict">${verdict(sh)}</div>`}
+ else if(sh.st==='open')d=`<p class="empty">This shift is still open at the till. It appears here for checking when ${sh.cashier} closes it.</p><div class="rows">${rw('Sales so far',br(tt.all))}${rw('Expected cash now',br(sh.float+tt.cash))}</div>`;
+ else d=`<p class="fine">Cashier ${sh.cashier} · ${sh.start} to ${sh.end} · checked by ${sh.verifier}</p><div class="rows">${rw('Total sales',br(tt.all))}${rw('Expected cash',br(sh.float+tt.cash))}${rw('Counted cash',br(sh.counted))}${rw('Variance',sgn(sh.variance),'st')}</div>${sh.note?`<p class="sub">Note: ${esc(sh.note)}</p>`:''}`;
+ return `<div class="vh"><div><h1>Money verification</h1><p class="sub">Abel, verifier. Recount every closed shift and match each digital payment to its statement before it is approved.</p></div></div>
+ <div class="gridv"><section class="card"><div class="ch"><h2>Shifts</h2></div><div class="list">${list.map(s=>`<button class="li" data-a="vshift" data-v="${s.id}" aria-pressed="${s.id===S.vshift}"><span><b>${s.name}</b><small>${s.when} · ${s.cashier} · ${br(totals(s).all)}</small></span>${chip(SHS,s.st)}</button>`).join('')}</div></section>
+ <section class="card"><div class="ch"><h2>${sh.name} · ${sh.when}</h2>${chip(SHS,sh.st)}</div>${d}</section></div>`;
+}
+
+function dayStats(){const ps=todayPays(),by={cash:0,telebirr:0,cbe:0,card:0},bw={};ps.forEach(p=>{by[p.m]+=p.amt;bw[p.w]=(bw[p.w]||0)+p.amt});const tot=sum(ps.map(p=>p.amt));return{ps,by,bw,tot}}
+function vManager(){
+ const{ps,by,bw,tot}=dayStats();
+ const top=Object.entries(S.items).sort((a,b)=>b[1]*M[b[0]].p-a[1]*M[a[0]].p).slice(0,6).map(([m,q])=>[M[m].n,q*M[m].p,`${q} · ${br(q*M[m].p)}`]);
+ const busy=S.tables.filter(x=>tstat(x)!=='free').length;
+ return `<div class="vh"><div><h1>Today: ${br(tot)} in sales from ${ps.length} bills</h1><p class="sub">Tsion, manager. Figures update as bills are paid.</p></div><button class="btn pri" data-a="zreport">Daily report</button></div>
+ <div class="kpis"><div class="kpi"><span>Sales today</span><b>${br(tot)}</b><small>2 shifts</small></div><div class="kpi"><span>Average bill</span><b>${br(ps.length?tot/ps.length:0)}</b><small>incl. service and VAT</small></div><div class="kpi"><span>Tables busy</span><b>${busy} / 12</b><small>${S.tickets.filter(k=>k.st==='new'||k.st==='cooking').length} tickets in kitchen</small></div><div class="kpi"><span>Shifts to verify</span><b>${S.shifts.filter(s=>s.st==='pending').length}</b><small>${S.shifts.filter(s=>s.today&&s.st==='flagged').length} flagged today</small></div></div>
+ <div class="gridm">
+ <section class="card"><div class="ch"><h2>By payment method</h2></div>${bars(PM.map(m=>[m.n,by[m.id]]),0)}</section>
+ <section class="card"><div class="ch"><h2>Top items by sales</h2></div>${bars(top,0)}</section>
+ <section class="card"><div class="ch"><h2>Sales by waitress</h2></div>${bars(Object.entries(bw).sort((a,b)=>b[1]-a[1]),0)}</section>
+ <section class="card"><div class="ch"><h2>Menu availability</h2></div>${MENU.filter(m=>m.c!=='Drinks').map(m=>`<div class="tog"><span>${esc(m.n)}</span><button class="sw" role="switch" aria-checked="${!S.soldOut[m.id]}" aria-label="${esc(m.n)} available" data-a="sold" data-v="${m.id}"></button></div>`).join('')}<p class="fine">Turning an item off greys it out on the waitress menu.</p></section>
+ <section class="card"><div class="ch"><h2>Shifts today</h2></div><div class="rows">${S.shifts.filter(s=>s.today).map(s=>`<div class="rw"><span>${s.name} · ${s.cashier}<br><small class="fine">${br(totals(s).all)}${s.variance?' · '+sgn(s.variance):''}</small></span><span>${chip(SHS,s.st)}</span></div>`).join('')}</div></section>
+ <section class="card"><div class="ch"><h2>Activity log</h2></div><div class="log">${S.log.map(l=>`<div><time>${l.t}</time><b>${esc(l.w)}</b> ${esc(l.x)}</div>`).join('')}</div></section>
+ </div>`;
+}
+
+let rs=7;const rnd=()=>(rs=rs*16807%2147483647)/2147483647;
+const DAYS=Array.from({length:25},(_,i)=>{const d=i+1,wd=(d-1)%7,we=wd===0||wd===6;return{d,v:Math.round((44000+rnd()*13000+(we?17000:0)+(wd===5?8000:0))/10)*10}});
+const EXP=[['Ingredients and supplies',612400],['Staff salaries',286000],['Rent',120000],['Electricity and water',38500],['Other',21300]];
+const SHARE={cash:.46,telebirr:.31,cbe:.15,card:.08};
+const FLAGS=[{d:'Mon 17 Nov',s:'Evening',c:'Selam',v:-300},{d:'Sat 8 Nov',s:'Morning',c:'Meron',v:-200},{d:'Tue 4 Nov',s:'Evening',c:'Selam',v:-140}];
+function month(){const t=dayStats(),past=sum(DAYS.map(x=>x.v)),rev=past+t.tot,exp=sum(EXP.map(e=>e[1])),flagged=[...S.shifts.filter(s=>s.today&&s.st==='flagged').map(s=>({d:'Today',s:s.name.split(' ')[0],c:s.cashier,v:s.variance})),...FLAGS];
+ const live=S.shifts.filter(s=>s.today);return{t,past,rev,exp,profit:rev-exp,proj:rev/26*30,flagged,ver:72+live.filter(s=>s.st==='verified').length,var:sum(flagged.map(f=>f.v))+sum(live.filter(s=>s.st==='verified').map(s=>s.variance||0)),mix:PM.map(m=>[m.n,past*SHARE[m.id]+t.by[m.id]])}}
+function vOwner(){
+ const m=month(),oct=1298400,ch=(m.rev-oct)/oct*100;
+ return `<div class="vh"><div><h1>November so far: ${shortBr(m.rev)} in sales, ${shortBr(m.profit)} profit</h1><p class="sub">Ato Bekele, owner. Hidar 2019 E.C., 26 days in. All amounts in birr.</p></div><button class="btn pri" data-a="mreport">Monthly report</button></div>
+ <div class="kpis"><div class="kpi"><span>Sales this month</span><b>${shortBr(m.rev)}</b><small>${ch>=0?'+':'−'}${Math.abs(ch).toFixed(1)}% vs first 26 days of October</small></div><div class="kpi"><span>Expenses</span><b>${shortBr(m.exp)}</b><small>recorded by the manager</small></div><div class="kpi"><span>Net profit</span><b>${shortBr(m.profit)}</b><small>${(m.profit/m.rev*100).toFixed(1)}% margin</small></div><div class="kpi"><span>Month on pace for</span><b>${shortBr(m.proj)}</b><small>at the current daily average</small></div></div>
+ <div class="grid2"><section class="card"><div class="ch"><h2>Daily sales, November</h2><span class="fine">Red bar is today, still open</span></div><div class="fig"><svg id="chart" role="img" aria-label="Daily sales bar chart"></svg></div></section>
+ <section class="card"><div class="ch"><h2>Money checks this month</h2></div><div class="rows">${rw('Shifts verified',m.ver)}${rw('Shifts flagged',m.flagged.length)}${rw('Net cash variance',sgn(m.var),'st')}</div><h3>Flagged shifts</h3><div class="rows">${m.flagged.map(f=>rw(`${f.d} · ${esc(f.s)} · ${esc(f.c)}`,`<span class="bad-t">${sgn(f.v)}</span>`)).join('')}</div></section></div>
+ <div class="gridm" style="margin-top:18px"><section class="card"><div class="ch"><h2>Expenses</h2><span class="fine">${br(m.exp)}</span></div>${bars(EXP,0)}</section><section class="card"><div class="ch"><h2>How customers paid</h2></div>${bars(m.mix.map(x=>[x[0],x[1],(x[1]/m.rev*100).toFixed(0)+'% · '+shortBr(x[1])]),0)}</section></div>`;
+}
+function drawChart(){const s=$('#chart');if(!s)return;const W=s.clientWidth,H=s.clientHeight;if(!W)return;const t=dayStats().tot,d=[...DAYS,{d:26,v:t,today:1}],l=40,r=6,tp=22,b=26,mx=Math.ceil(Math.max(...d.map(x=>x.v))/20000)*20000,bw=(W-l-r)/30,ih=H-tp-b;let g='';
+ for(let v=0;v<=mx;v+=20000){const y=tp+ih*(1-v/mx);g+=`<line class="gl" x1="${l}" x2="${W-r}" y1="${y}" y2="${y}"/><text class="ax" x="${l-6}" y="${y+4}" text-anchor="end">${v/1000}k</text>`}
+ d.forEach((x,i)=>{const h=ih*x.v/mx,X=l+i*bw+bw*.14;g+=`<rect class="${x.today?'bt':'bb'}" x="${X}" y="${tp+ih-h}" width="${bw*.72}" height="${h}" rx="2"><title>Nov ${x.d}: ${br(x.v)}</title></rect>`;if(x.d===1||x.d%(W<520?10:5)===0)g+=`<text class="ax" x="${X+bw*.36}" y="${H-8}" text-anchor="middle">${x.d}</text>`});
+ g+=`<text class="ax" x="${l+26*bw+2}" y="${tp+ih-ih*t/mx+12}">${W<520?'':'today '}${shortBr(t)}</text>`;s.innerHTML=g}
+const ro=new ResizeObserver(()=>drawChart());
+
+function zText(){const{ps,by,bw,tot}=dayStats(),vat=tot*15/115;return `SHEGER HOTEL · DAILY REPORT\nThu 26 Nov 2026 · ህዳር 17, 2019\nPrinted ${now()} by Tsion\n------------------------------\nBills paid        ${ps.length}\nTotal sales       ${br(tot)}\nAverage bill      ${br(ps.length?tot/ps.length:0)}\nVAT included      ${br(vat)}\n------------------------------\n${PM.map(m=>(m.n+'                  ').slice(0,18)+br(by[m.id])).join('\n')}\n------------------------------\n${Object.entries(bw).map(([w,v])=>(w+'                  ').slice(0,18)+br(v)).join('\n')}\n------------------------------\n${S.shifts.filter(s=>s.today).map(s=>`${s.name} (${s.cashier}): ${SHS[s.st][0]}${s.variance?' '+sgn(s.variance):''}`).join('\n')}`}
+function mText(){const m=month();return `SHEGER HOTEL · MONTHLY REPORT\nNovember 2026 · Hidar 2019, day 1 to 26\n------------------------------\nSales             ${br(m.rev)}\nExpenses          ${br(m.exp)}\nNet profit        ${br(m.profit)}\nOn pace for       ${br(m.proj)}\n------------------------------\n${EXP.map(e=>e[0]+': '+br(e[1])).join('\n')}\n------------------------------\nShifts verified   ${m.ver}\nShifts flagged    ${m.flagged.length}\nNet variance      ${sgn(m.var)}`}
+const rptModal=(h,txt)=>{S.copy=txt;S.modal=`<div class="ch"><h2>${h}</h2><button class="btn sm" data-a="mclose">Close</button></div><pre class="rpt">${esc(txt)}</pre><div class="acts"><button class="btn pri" data-a="copy">Copy report</button></div>`};
+
+const A={
+ role:v=>{S.role=v;try{history.replaceState(null,'','#'+v)}catch(e){}scrollTo(0,0)},
+ table:v=>{S.table=+v},cat:v=>{S.cat=v},
+ add:v=>{let o=S.orders[S.table];if(!o)o=S.orders[S.table]={waiter:'Hana',items:[],billReq:false};const l=o.items.find(x=>!x.tk&&x.mid===v);l?l.qty++:o.items.push({mid:v,qty:1,tk:null})},
+ inc:v=>{S.orders[S.table].items[v].qty++},
+ dec:v=>{const o=S.orders[S.table],l=o.items[v];if(--l.qty<=0)o.items.splice(v,1);if(!o.items.length)delete S.orders[S.table]},
+ send:()=>{const o=S.orders[S.table],ls=o.items.filter(l=>!l.tk),id='K'+(++S.seq);ls.forEach(l=>l.tk=id);S.tickets.push({id,table:S.table,waiter:o.waiter,items:ls.map(l=>[l.mid,l.qty]),st:'new',ts:Date.now()});log(o.waiter,`Sent Table ${S.table} to kitchen (${id})`);toast(`Table ${S.table} sent to the kitchen`)},
+ serve:v=>{const k=tkt(v);k.st='served';log(k.waiter,`Served Table ${k.table}`);toast(`Table ${k.table} served`,'ok')},
+ reqbill:()=>{const o=S.orders[S.table];o.billReq=true;log(o.waiter,`Requested bill for Table ${S.table}, ${br(calc(o).tot)}`);toast(`Bill for Table ${S.table} sent to the cashier`)},
+ kstart:v=>{const k=tkt(v);k.st='cooking';log('Chef Dawit',`Started Table ${k.table}`)},
+ kready:v=>{const k=tkt(v);k.st='ready';log('Chef Dawit',`Table ${k.table} ready`);toast(`Table ${k.table} is ready. ${k.waiter} notified.`,'ok')},
+ bill:v=>{S.bill=+v;S.cashIn='';S.ref=''},method:v=>{S.method=v;S.ref=''},qcash:v=>{S.cashIn=v},
+ pay:()=>{const t=S.bill,o=S.orders[t],c=calc(o),e=$('#perr');let ref='',chg=0;
+  if(S.method==='cash'){const g=+S.cashIn;if(!g){e.textContent='Enter the cash received, or tap an amount.';return false}if(g<c.tot){e.textContent=`That is ${br(c.tot-g)} less than the total.`;return false}chg=g-c.tot}
+  else{ref=S.ref.trim().toUpperCase();if(ref.length<6){e.textContent='Enter the transaction number from the SMS or slip (at least 6 characters).';return false}if(todayPays().some(p=>p.ref===ref)){e.textContent='This transaction number was already used today. Ask the customer to show the SMS again.';return false}}
+  const sh=openShift();sh.payments.push({t:now(),m:S.method,amt:c.tot,ref,w:o.waiter,table:t});o.items.forEach(l=>S.items[l.mid]=(S.items[l.mid]||0)+l.qty);
+  delete S.orders[t];S.tickets=S.tickets.filter(k=>k.table!==t||k.st!=='served');S.bill=null;S.cashIn='';S.ref='';
+  log('Selam',`Took Table ${t} ${S.method==='cash'?'in cash':'by '+PMN[S.method]}, ${br(c.tot)}`);
+  S.modal=`<h2>Payment recorded</h2><div class="rows" style="margin-top:12px">${rw('Table',t)}${rw('Method',PMN[S.method])}${ref?rw('Reference',esc(ref)):''}${rw('Total',br(c.tot),'st')}${S.method==='cash'?rw('Change to give',br(chg),'st'):''}</div><p class="fine">Table ${t} is free again. Receipt sent to the printer.</p><div class="acts"><button class="btn pri" data-a="mclose">Done</button></div>`},
+ closeShift:()=>{const sh=openShift(),tt=totals(sh);S.modal=`<h2>Close ${sh.name.toLowerCase()}</h2><p class="sub">Count the cash in the drawer and type the total. The verifier recounts it.</p>${rw('System expects',br(sh.float+tt.cash),'st')}<label for="declIn">Cash you counted</label><input id="declIn" inputmode="numeric" placeholder="Amount in birr"><p class="err" id="derr"></p><div class="acts"><button class="btn pri" data-a="closeConfirm">Close and send</button><button class="btn" data-a="mclose">Cancel</button></div>`},
+ closeConfirm:()=>{const v=+($('#declIn').value.replace(/[^\d]/g,''));if(!v){$('#derr').textContent='Enter the cash you counted.';return false}
+  const sh=openShift();sh.st='pending';sh.end=now();sh.declared=v;sh.denoms={};sh.checked=false;sh.stmt={};
+  const nx={id:'s'+(++S.seq),name:'Evening shift',when:'Today',today:true,cashier:'Selam',start:now(),end:null,float:2000,st:'open',denoms:{},checked:false,stmt:{},note:'',payments:[]};S.shifts.push(nx);
+  log('Selam',`Closed ${sh.name.toLowerCase()}, declared ${br(v)} cash`);S.vshift=sh.id;S.modal=null;toast('Shift sent to Abel for verification. New shift opened.','ok')},
+ vshift:v=>{S.vshift=v},
+ vcheck:()=>{const sh=vsh();sh.checked=true;const bad=sh.payments.filter(p=>p.m!=='cash'&&stmtAmt(sh,p)!==p.amt).length;toast(bad?`${bad} payment does not match its statement`:'All digital payments match',bad?'bad':'ok')},
+ vapprove:()=>finish('verified'),vflag:()=>finish('flagged'),
+ sold:v=>{S.soldOut[v]=!S.soldOut[v];log('Tsion',`Marked ${M[v].n} ${S.soldOut[v]?'sold out':'available'}`)},
+ zreport:()=>rptModal('Daily report',zText()),mreport:()=>rptModal('Monthly report',mText()),
+ copy:()=>{try{navigator.clipboard.writeText(S.copy).then(()=>toast('Report copied','ok'),()=>toast('Copy was blocked here. Select the text instead.'))}catch(e){toast('Copy was blocked here. Select the text instead.')}return false},
+ mclose:()=>{S.modal=null}};
+function finish(st){const sh=vsh(),tt=totals(sh),c=counted(sh),v=c-(sh.float+tt.cash)+digDiff(sh);sh.st=st;sh.counted=c;sh.variance=v;sh.verifier='Abel';
+ log('Abel',`${st==='verified'?'Verified':'Flagged'} ${sh.name.toLowerCase()} (${sh.cashier}), variance ${sgn(v)}`);toast(st==='verified'?'Shift verified':`Flagged to the owner: ${sgn(v)}`,st==='verified'?'ok':'bad');const nx=S.shifts.find(s=>s.st==='pending');if(nx)S.vshift=nx.id}
+
+function render(){
+ const badge={waiter:S.tickets.filter(k=>k.st==='ready').length,kitchen:S.tickets.filter(k=>k.st==='new').length,cashier:S.tables.filter(t=>S.orders[t]&&S.orders[t].billReq).length,verifier:S.shifts.filter(s=>s.st==='pending').length};
+ const nav=$('#roles'),sl=nav.scrollLeft;
+ nav.innerHTML=ROLES.map(r=>`<button class="rt" data-a="role" data-v="${r.id}" aria-pressed="${S.role===r.id}"><span><b>${r.n}</b><small>${r.p}</small></span>${badge[r.id]?`<span class="badge">${badge[r.id]}</span>`:''}</button>`).join('');nav.scrollLeft=sl;
+ $('#view').innerHTML={waiter:vWaiter,kitchen:vKitchen,cashier:vCashier,verifier:vVerifier,manager:vManager,owner:vOwner}[S.role]();
+ $('#modal').innerHTML=S.modal?`<div class="modal" data-a="mclose" data-self="1"><div class="dlg" role="dialog" aria-modal="true">${S.modal}</div></div>`:'';
+ ro.disconnect();const c=$('#chart');if(c){ro.observe(c);drawChart()}
+ updChg();tick();
+}
+function tick(){$('#clk')&&($('#clk').textContent=now());document.querySelectorAll('[data-ts]').forEach(el=>{const s=Math.max(0,Math.floor((Date.now()-+el.dataset.ts)/1000));el.textContent=pad(Math.floor(s/60))+':'+pad(s%60);el.classList.toggle('late',s>=900)})}
+setInterval(tick,1000);
+document.addEventListener('click',e=>{const el=e.target.closest('[data-a]');if(!el||el.disabled)return;const a=el.dataset.a;if(a==='mclose'&&el.dataset.self&&e.target!==el)return;if(A[a](el.dataset.v)!==false)render()});
+document.addEventListener('input',e=>{const el=e.target;
+ if(el.id==='cashIn'){S.cashIn=el.value.replace(/[^\d]/g,'');updChg()}
+ else if(el.id==='ref')S.ref=el.value;
+ else if(el.id==='vnote')vsh().note=el.value;
+ else if(/^d\d+$/.test(el.id)){const sh=vsh(),n=+el.id.slice(1);sh.denoms[n]=el.value.replace(/\D/g,'');$('#dv'+n).textContent=br(n*(+sh.denoms[n]||0));$('#vcount').textContent=br(counted(sh));$('#vverdict').innerHTML=verdict(sh)}});
+document.addEventListener('keydown',e=>{if(e.key==='Escape'&&S.modal){S.modal=null;render()}});
+const h=location.hash.slice(1);if(ROLES.some(r=>r.id===h))S.role=h;
+render();
+}
+</script>
+</body>
+</html>
