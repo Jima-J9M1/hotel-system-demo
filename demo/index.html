@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Sheger Hotel System</title>
+<title>Sheger Restaurant System</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;700;800&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;600&family=Noto+Sans+Ethiopic:wght@400;600&display=swap" rel="stylesheet">
@@ -188,7 +188,7 @@ footer ol{margin:10px 0 4px;padding-left:20px;line-height:1.7}
   <div class="bar">
     <div class="brand">
       <svg width="34" height="34" viewBox="0 0 32 32" aria-hidden="true"><circle cx="15" cy="20" r="9" fill="#e2442a"/><rect x="12.5" y="4" width="5" height="11" rx="2" fill="#e2442a"/><path d="M23 15 L29 9" stroke="#e2442a" stroke-width="2.6" stroke-linecap="round"/><circle cx="12" cy="18" r="2.2" fill="#ffb29e"/></svg>
-      <div><b>Sheger Hotel</b><span class="am">ሸገር ሆቴል · Control system</span></div>
+      <div><b>Sheger Restaurant</b><span class="am">ሸገር ሬስቶራንት · Control system</span></div>
     </div>
     <div class="clock"><span id="clk"></span><br><span class="am">ሐሙስ ህዳር 17, 2019</span> · Thu 26 Nov 2026</div>
   </div>
@@ -207,7 +207,7 @@ footer ol{margin:10px 0 4px;padding-left:20px;line-height:1.7}
       <li>Manager: open the daily report. Owner: see the month and the flagged shift.</li>
     </ol>
   </details>
-  Sample data for the demo: the hotel, staff, prices and amounts are made up.
+  Sample data for the demo: the restaurant, staff, prices and amounts are made up.
 </footer>
 <div id="modal"></div>
 <div id="toasts" aria-live="polite"></div>
@@ -328,7 +328,7 @@ function vCashier(){
  const sh=openShift(),tt=totals(sh);
  let pay='';
  if(S.bill!=null){const o=S.orders[S.bill],c=calc(o),q=[...new Set([c.tot,Math.ceil(c.tot/100)*100,Math.ceil(c.tot/500)*500,Math.ceil(c.tot/1000)*1000])];
- pay=`<div class="paygrid"><div class="rcpt"><div class="rc-h"><b>Sheger Hotel</b><span class="am">ሸገር ሆቴል</span><span>Table ${S.bill} · ${esc(o.waiter)} · ${now()}</span></div>
+ pay=`<div class="paygrid"><div class="rcpt"><div class="rc-h"><b>Sheger Restaurant</b><span class="am">ሸገር ሬስቶራንት</span><span>Table ${S.bill} · ${esc(o.waiter)} · ${now()}</span></div>
  ${o.items.map(l=>`<div class="rc-r"><span>${l.qty} × ${esc(M[l.mid].n)}</span><span>${br(M[l.mid].p*l.qty)}</span></div>`).join('')}
  <div class="rc-sep"></div><div class="rc-r"><span>Subtotal</span><span>${br(c.sub)}</span></div><div class="rc-r"><span>Service 10%</span><span>${br(c.svc)}</span></div><div class="rc-r"><span>VAT 15%</span><span>${br(c.vat)}</span></div><div class="rc-sep"></div><div class="rc-r big"><span>Total</span><span>${br(c.tot)}</span></div></div>
  <div><h2>Payment</h2><div class="seg" style="margin-top:10px">${PM.map(m=>`<button class="pill" data-a="method" data-v="${m.id}" aria-pressed="${S.method===m.id}">${m.n}</button>`).join('')}</div>
@@ -405,8 +405,8 @@ function drawChart(){const s=$('#chart');if(!s)return;const W=s.clientWidth,H=s.
  g+=`<text class="ax" x="${l+26*bw+2}" y="${tp+ih-ih*t/mx+12}">${W<520?'':'today '}${shortBr(t)}</text>`;s.innerHTML=g}
 const ro=new ResizeObserver(()=>drawChart());
 
-function zText(){const{ps,by,bw,tot}=dayStats(),vat=tot*15/115;return `SHEGER HOTEL · DAILY REPORT\nThu 26 Nov 2026 · ህዳር 17, 2019\nPrinted ${now()} by Tsion\n------------------------------\nBills paid        ${ps.length}\nTotal sales       ${br(tot)}\nAverage bill      ${br(ps.length?tot/ps.length:0)}\nVAT included      ${br(vat)}\n------------------------------\n${PM.map(m=>(m.n+'                  ').slice(0,18)+br(by[m.id])).join('\n')}\n------------------------------\n${Object.entries(bw).map(([w,v])=>(w+'                  ').slice(0,18)+br(v)).join('\n')}\n------------------------------\n${S.shifts.filter(s=>s.today).map(s=>`${s.name} (${s.cashier}): ${SHS[s.st][0]}${s.variance?' '+sgn(s.variance):''}`).join('\n')}`}
-function mText(){const m=month();return `SHEGER HOTEL · MONTHLY REPORT\nNovember 2026 · Hidar 2019, day 1 to 26\n------------------------------\nSales             ${br(m.rev)}\nExpenses          ${br(m.exp)}\nNet profit        ${br(m.profit)}\nOn pace for       ${br(m.proj)}\n------------------------------\n${EXP.map(e=>e[0]+': '+br(e[1])).join('\n')}\n------------------------------\nShifts verified   ${m.ver}\nShifts flagged    ${m.flagged.length}\nNet variance      ${sgn(m.var)}`}
+function zText(){const{ps,by,bw,tot}=dayStats(),vat=tot*15/115;return `SHEGER RESTAURANT · DAILY REPORT\nThu 26 Nov 2026 · ህዳር 17, 2019\nPrinted ${now()} by Tsion\n------------------------------\nBills paid        ${ps.length}\nTotal sales       ${br(tot)}\nAverage bill      ${br(ps.length?tot/ps.length:0)}\nVAT included      ${br(vat)}\n------------------------------\n${PM.map(m=>(m.n+'                  ').slice(0,18)+br(by[m.id])).join('\n')}\n------------------------------\n${Object.entries(bw).map(([w,v])=>(w+'                  ').slice(0,18)+br(v)).join('\n')}\n------------------------------\n${S.shifts.filter(s=>s.today).map(s=>`${s.name} (${s.cashier}): ${SHS[s.st][0]}${s.variance?' '+sgn(s.variance):''}`).join('\n')}`}
+function mText(){const m=month();return `SHEGER RESTAURANT · MONTHLY REPORT\nNovember 2026 · Hidar 2019, day 1 to 26\n------------------------------\nSales             ${br(m.rev)}\nExpenses          ${br(m.exp)}\nNet profit        ${br(m.profit)}\nOn pace for       ${br(m.proj)}\n------------------------------\n${EXP.map(e=>e[0]+': '+br(e[1])).join('\n')}\n------------------------------\nShifts verified   ${m.ver}\nShifts flagged    ${m.flagged.length}\nNet variance      ${sgn(m.var)}`}
 const rptModal=(h,txt)=>{S.copy=txt;S.modal=`<div class="ch"><h2>${h}</h2><button class="btn sm" data-a="mclose">Close</button></div><pre class="rpt">${esc(txt)}</pre><div class="acts"><button class="btn pri" data-a="copy">Copy report</button></div>`};
 
 const A={

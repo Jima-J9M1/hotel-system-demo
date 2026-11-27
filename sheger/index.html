@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sheger Restaurant Addis</title>
+<meta name="description" content="Sheger Restaurant in Bole, Addis Ababa: Ethiopian and international food, a daily coffee ceremony, live music on Thursdays, and table booking.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Inter:wght@400;500;600&family=Noto+Sans+Ethiopic:wght@400;600&display=swap" rel="stylesheet">
+<style>
+/* VOICE warm, generous, a little proud: an Addis restaurant inviting you in
+   IDEA the shared injera platter: everything on the site is served around one round table
+   PICTURE a large top-down beyaynetu platter on a woven mesob rim, cropped by the hero edge; small drawn plates and glasses on every menu card
+   COLOUR night coffee ground for hero and evening bands, white day ground, berbere red, turmeric, collard green from the stews
+   TYPE DM Serif Display headings, Inter text, Noto Sans Ethiopic for Amharic names
+   LAYOUT hero title left over the platter on a laptop, platter under the title on a phone; then menu, coffee, events, booking, visit */
+:root{color-scheme:light dark;--bg:light-dark(#ffffff,#120b08);--ink:light-dark(#21140e,#f6ede4);--mute:light-dark(#6d5d53,#b9aa9f);--line:light-dark(#ece3da,#33261e);--soft:light-dark(#f7f2ec,#1b120d);--card:light-dark(#ffffff,#1a110c);--night:#1c110c;--red:#c8321c;--tur:#e7a823;--grn:#2f6b3a}
+:root[data-theme=light]{color-scheme:light}:root[data-theme=dark]{color-scheme:dark}
+*{box-sizing:border-box;min-width:0}
+html{scroll-behavior:smooth;scroll-padding-top:74px}
+body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.6 Inter,system-ui,sans-serif;overflow-x:clip}
+a{color:inherit}
+p{margin:0}
+.am{font-family:'Noto Sans Ethiopic',Inter,sans-serif}
+h1,h2,h3{font-family:'DM Serif Display',Georgia,serif;font-weight:400;margin:0;letter-spacing:-.01em;text-wrap:balance}
+h1{font-size:clamp(46px,6.6vw,88px);line-height:.98}
+h2{font-size:clamp(36px,4.4vw,58px);line-height:1.02}
+h3{font-size:24px;line-height:1.15}
+.lead{font-size:clamp(17px,1.5vw,20px);color:var(--mute);max-width:34em}
+.in{max-width:1240px;margin:0 auto}
+.band{padding:clamp(60px,8vw,112px) max(5vw,16px)}
+.night{background:var(--night);color:#f6ede4}
+.night .lead{color:#cdbcae}
+.soft{background:var(--soft)}
+.btn{display:inline-flex;align-items:center;justify-content:center;min-height:50px;padding:0 24px;border-radius:99px;font:600 16px Inter,sans-serif;text-decoration:none;border:1.5px solid currentColor;background:transparent;color:inherit;cursor:pointer;white-space:nowrap;transition:transform .15s}
+.btn:hover{transform:translateY(-2px)}
+.btn.pri{background:var(--red);border-color:var(--red);color:#fff}
+.acts{display:flex;gap:12px;flex-wrap:wrap;margin-top:30px}
+:focus-visible{outline:2px solid var(--tur);outline-offset:3px}
+nav{position:sticky;top:0;z-index:30;background:color-mix(in srgb,var(--night) 94%,transparent);backdrop-filter:blur(8px);color:#f6ede4}
+nav .in{max-width:none;display:flex;align-items:center;gap:24px;padding:12px max(5vw,16px)}
+.logo{display:flex;align-items:center;gap:10px;text-decoration:none;margin-right:auto}
+.logo b{font:400 26px/1 'DM Serif Display',serif}
+.logo small{display:block;font-size:12px;opacity:.7}
+.links{display:flex;gap:22px;font-size:15px}
+.links a{text-decoration:none;opacity:.85}
+.links a:hover{opacity:1}
+nav .btn{min-height:42px;padding:0 18px;font-size:15px}
+.hero{background:var(--night);color:#f6ede4;position:relative;overflow:hidden;padding:clamp(48px,7vw,96px) max(5vw,16px) clamp(56px,7vw,100px)}
+.hero .in{position:relative;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:24px;align-items:center;min-height:min(72svh,640px)}
+.hero h1 em{color:var(--tur);font-style:italic}
+.hero .lead{color:#d6c6b8;margin-top:22px}
+.open{display:inline-flex;align-items:center;gap:10px;font-size:15px;padding:7px 14px;border-radius:99px;background:rgba(255,255,255,.08);margin-bottom:22px}
+.open i{width:10px;height:10px;border-radius:50%;background:#53c27a}
+.open.closed i{background:#e05a43}
+.platter{position:relative;width:min(118%,760px);aspect-ratio:1;justify-self:start;margin-right:-18%}
+.platter svg{width:100%;height:100%;display:block}
+.tag{position:absolute;background:#fff;color:var(--night);border-radius:12px;padding:6px 12px;font-size:14px;font-weight:600;line-height:1.25;box-shadow:0 6px 0 rgba(0,0,0,.3);white-space:nowrap}
+.tag small{display:block;font-weight:400;font-size:12px;color:#7b6a5f}
+.story{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(28px,6vw,90px);align-items:start}
+.story p+p{margin-top:16px}
+.nums{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:34px}
+.nums div{border-top:2px solid var(--ink);padding-top:12px}
+.nums b{display:block;font:400 clamp(34px,4vw,48px)/1 'DM Serif Display',serif;color:var(--red)}
+.nums span{font-size:15px;color:var(--mute)}
+.mhead{display:flex;justify-content:space-between;align-items:flex-end;gap:20px;flex-wrap:wrap;margin-bottom:26px}
+.tabs{display:flex;gap:8px;flex-wrap:wrap}
+.tab{min-height:46px;padding:0 18px;border-radius:99px;border:1.5px solid var(--line);background:var(--card);color:var(--ink);font:600 15px Inter,sans-serif;cursor:pointer}
+.tab[aria-selected=true]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.fast{display:flex;align-items:center;gap:10px;font-size:15px;cursor:pointer;margin-top:14px;width:fit-content}
+.fast input{width:22px;height:22px;accent-color:var(--grn)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,270px),1fr));gap:18px}
+.dish{background:var(--card);border:1px solid var(--line);border-radius:24px;padding:18px;display:grid;grid-template-rows:auto auto 1fr auto;gap:6px}
+.dish .pic{aspect-ratio:1.35;border-radius:16px;background:var(--soft);display:grid;place-items:center;margin-bottom:8px;overflow:hidden}
+.dish .pic svg{width:78%;height:100%}
+.dish .top{display:flex;justify-content:space-between;gap:10px;align-items:baseline}
+.dish h3{font-size:23px}
+.dish .pr{font-weight:600;white-space:nowrap}
+.dish .amn{font-size:14px;color:var(--mute)}
+.dish p{color:var(--mute);font-size:15px}
+.badges{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}
+.b{font-size:12px;font-weight:600;padding:3px 10px;border-radius:99px;white-space:nowrap}
+.b-fast{background:#dcefdf;color:#22552c}.b-hot{background:#fbe0d9;color:#9c2412}.b-fav{background:#fbeccb;color:#7a5208}
+.empty{color:var(--mute);padding:20px 0}
+.fastday{background:#dcefdf;color:#22552c;border-radius:14px;padding:10px 14px;font-size:15px;margin-top:14px}
+.coffee{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(28px,6vw,90px);align-items:center}
+.cerem svg{width:100%;max-width:520px;display:block;margin:0 auto}
+.rounds{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:30px}
+.rounds div{background:rgba(255,255,255,.07);border-radius:18px;padding:16px}
+.rounds b{display:block;font:400 26px 'DM Serif Display',serif;color:var(--tur)}
+.rounds span{font-size:15px;color:#cdbcae}
+.when{margin-top:24px;font-size:16px}
+.events{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px;margin-top:34px}
+.ev{background:var(--card);border:1px solid var(--line);border-radius:24px;overflow:hidden;display:grid;grid-template-rows:auto 1fr}
+.ev .art{height:150px;display:block}
+.ev .art svg{width:100%;height:100%;display:block}
+.ev .body{padding:20px;display:grid;gap:8px;align-content:start}
+.ev .day{font-size:13px;font-weight:600;color:var(--red)}
+.ev p{color:var(--mute);font-size:15px}
+.ev .btn{margin-top:8px;min-height:44px;justify-self:start;font-size:15px}
+.qr{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:clamp(28px,6vw,90px);align-items:center}
+.steps{list-style:none;padding:0;margin:26px 0 0;display:grid;gap:16px}
+.steps li{display:grid;grid-template-columns:44px minmax(0,1fr);gap:14px;align-items:start}
+.steps svg{width:44px;height:44px}
+.steps b{display:block}
+.steps span{color:var(--mute);font-size:15px}
+.phone{width:min(300px,100%);margin:0 auto;background:#120b08;border-radius:42px;padding:12px;box-shadow:0 18px 0 rgba(0,0,0,.12)}
+.screen{background:#fff;color:#21140e;border-radius:32px;padding:18px 14px;min-height:520px;display:grid;align-content:start;gap:10px;font-size:14px}
+.sbar{display:flex;justify-content:space-between;font-size:12px;font-weight:600;padding:0 6px}
+.screen h4{margin:6px 6px 0;font:400 24px 'DM Serif Display',serif}
+.screen .t{margin:0 6px;color:#7b6a5f;font-size:13px}
+.srow{display:flex;justify-content:space-between;align-items:center;gap:8px;border:1px solid #eee3d8;border-radius:14px;padding:10px 12px}
+.srow b{display:block;font-weight:600}
+.srow small{color:#7b6a5f}
+.plus{width:30px;height:30px;border-radius:50%;background:var(--red);color:#fff;display:grid;place-items:center;font-weight:700;flex:none}
+.sbtn{background:var(--red);color:#fff;border-radius:14px;padding:12px;text-align:center;font-weight:600;margin-top:6px}
+.status{display:flex;gap:6px;margin:0 6px}
+.status i{flex:1;height:6px;border-radius:9px;background:#eee3d8}
+.status i.on{background:var(--grn)}
+.book{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);gap:clamp(28px,6vw,90px);align-items:start}
+.facts{margin-top:28px;display:grid;gap:14px}
+.facts div{display:grid;grid-template-columns:7em minmax(0,1fr);gap:12px;border-top:1px solid var(--line);padding-top:12px}
+.facts span:first-child{color:var(--mute);font-size:15px}
+form,.done{background:var(--card);border:1px solid var(--line);border-radius:28px;padding:clamp(20px,3vw,34px)}
+.row{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:14px}
+label{display:block;font-size:14px;font-weight:600;margin:16px 0 6px}
+input,select,textarea{width:100%;font:16px Inter,sans-serif;color:var(--ink);background:var(--bg);border:1.5px solid var(--line);border-radius:14px;padding:11px 14px;min-height:48px}
+input:focus,select:focus,textarea:focus{border-color:var(--red);outline:none}
+.err{color:#c2321c;font-size:14px;margin-top:6px;min-height:0}
+form .btn{width:100%;margin-top:22px}
+.fine{font-size:13px;color:var(--mute);margin-top:12px}
+.done h3{font-size:30px;color:var(--grn)}
+.done .facts{margin-top:18px}
+.visit{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}
+.visit>div{border-top:2px solid #f6ede4;padding-top:16px}
+.visit h3{font-size:26px;margin-bottom:10px}
+.hours div{display:flex;justify-content:space-between;gap:10px;padding:6px 0;border-bottom:1px solid rgba(255,255,255,.12);font-size:16px}
+.hours span:last-child{white-space:nowrap}
+.visit a{color:var(--tur)}
+.rim{height:16px;background:repeating-linear-gradient(90deg,var(--red) 0 16px,#e2bd6e 16px 32px,var(--grn) 32px 48px,#e2bd6e 48px 64px)}
+footer{background:var(--night);color:#b9aa9f;padding:30px max(5vw,16px);font-size:14px;border-top:1px solid rgba(255,255,255,.1)}
+footer .in{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.btn{transition:none}#steam path{animation:none!important}}
+@keyframes rise{0%{opacity:0;transform:translateY(8px)}40%{opacity:.7}100%{opacity:0;transform:translateY(-22px)}}
+@media(max-width:980px){.links{display:none}.hero .in,.story,.coffee,.qr,.book{grid-template-columns:minmax(0,1fr)}.platter{width:min(100%,560px);margin:0 auto;justify-self:center}.events,.visit{grid-template-columns:minmax(0,1fr)}.hero .in{min-height:0}}
+@media(max-width:600px){.nums,.rounds{grid-template-columns:minmax(0,1fr)}.row{grid-template-columns:minmax(0,1fr)}.tag{font-size:12px;padding:5px 9px}.tag small{display:none}nav .btn{padding:0 14px}}
+</style>
+</head>
+<body>
+<nav aria-label="Main"><div class="in">
+  <a class="logo" href="#top"><svg width="36" height="36" viewBox="0 0 36 36" aria-hidden="true"><circle cx="18" cy="18" r="17" fill="#e2bd6e"/><circle cx="18" cy="18" r="13" fill="#d9b88a"/><circle cx="13" cy="14" r="4" fill="#c8321c"/><circle cx="22" cy="13" r="3.5" fill="#2f6b3a"/><circle cx="23" cy="22" r="4" fill="#e7a823"/><circle cx="14" cy="23" r="3.5" fill="#8e1f4a"/></svg><span><b>Sheger</b><small class="am">ሸገር ሬስቶራንት · Bole, Addis Ababa</small></span></a>
+  <div class="links"><a href="#menu">Menu</a><a href="#coffee">Coffee</a><a href="#events">Events</a><a href="#table">Order at the table</a><a href="#visit">Visit</a></div>
+  <a class="btn pri" href="#book">Book a table</a>
+</div></nav>
+
+<header class="hero" id="top"><div class="in">
+  <div>
+    <span class="open" id="open"><i></i><span id="openTxt">Open today 07:00 to 23:00</span></span>
+    <h1>Addis food, <em>shared</em> the way it should be.</h1>
+    <p class="lead">Fresh teff injera every morning, stews slow-cooked in our own berbere, and a coffee ceremony every afternoon. Come hungry, bring people.</p>
+    <div class="acts"><a class="btn pri" href="#menu">See the menu</a><a class="btn" href="#book">Book a table</a></div>
+  </div>
+  <div class="platter" id="platter" role="img" aria-label="A beyaynetu platter seen from above: injera topped with lentils, shiro, collard greens, split peas, cabbage, beetroot and salad"></div>
+</div></header>
+
+<section class="band" id="story"><div class="in story">
+  <div><h2>A kitchen that starts three days early</h2>
+    <div class="nums"><div><b>3</b><span>days to ferment our injera</span></div><div><b>16:00</b><span>coffee ceremony, every day</span></div><div><b>7</b><span>days a week, 07:00 to 23:00</span></div></div></div>
+  <div class="lead" style="max-width:none"><p>Our injera batter rests for three days before it meets the mitad, which gives it the sour taste and soft eyes you remember from home.</p><p>The berbere is dried, ground and blended in our own kitchen. Shiro is cooked to order in a clay pot and reaches your table still bubbling. On Wednesdays and Fridays, half the menu is fasting food, and it is some of our best.</p></div>
+</div></section>
+
+<section class="band soft" id="menu"><div class="in">
+  <div class="mhead"><div><h2>The menu</h2><p class="lead" style="margin-top:12px">Prices in birr, including VAT. Service charge of 10% is added at the table.</p></div>
+    <div><div class="tabs" role="tablist" id="tabs"></div><label class="fast"><input type="checkbox" id="fastOnly"> Fasting dishes only</label></div></div>
+  <div id="fastday"></div>
+  <div class="grid" id="dishes"></div>
+</div></section>
+
+<section class="band night" id="coffee"><div class="in coffee">
+  <div class="cerem"><svg viewBox="0 0 520 440" id="cer" role="img" aria-label="A jebena coffee pot with steam, small sini cups on a tray, and grass on the floor"></svg></div>
+  <div><h2>The coffee ceremony, every afternoon at four</h2>
+    <p class="lead" style="margin-top:18px">Green beans roasted at the table, ground by hand and brewed in a clay jebena, served with popcorn and incense. Stay for all three rounds.</p>
+    <div class="rounds"><div><b class="am">አቦል</b><span>Abol, the first and strongest round</span></div><div><b class="am">ቶና</b><span>Tona, the second, softer and slower</span></div><div><b class="am">በረካ</b><span>Baraka, the third, the blessing</span></div></div>
+    <p class="when">Daily 16:00 to 18:00 · Br 150 per person · no booking needed</p></div>
+</div></section>
+
+<section class="band" id="events"><div class="in">
+  <div class="mhead"><div><h2>Evenings at Sheger</h2><p class="lead" style="margin-top:12px">Something on most weeks. Book ahead for Thursdays, they fill up.</p></div></div>
+  <div class="events" id="evs"></div>
+</div></section>
+
+<section class="band soft" id="table"><div class="in qr">
+  <div><h2>Order from your table</h2>
+    <p class="lead" style="margin-top:18px">Every table has a small QR code. Scan it with your phone camera to see the menu in Amharic or English, order, and follow your food from the kitchen.</p>
+    <ol class="steps">
+      <li><svg viewBox="0 0 44 44" aria-hidden="true"><rect width="44" height="44" rx="12" fill="#fbe0d9"/><path d="M12 12h8v8h-8zM24 12h8v8h-8zM12 24h8v8h-8zM26 26h6v6h-6z" fill="#c8321c"/></svg><span><b>Scan the code on your table</b>No app to install. The menu opens in your browser.</span></li>
+      <li><svg viewBox="0 0 44 44" aria-hidden="true"><rect width="44" height="44" rx="12" fill="#fbeccb"/><circle cx="22" cy="22" r="10" fill="none" stroke="#a36d06" stroke-width="3"/><path d="M22 16v6l4 3" stroke="#a36d06" stroke-width="3" fill="none"/></svg><span><b>Order and watch it cook</b>Your order goes straight to the kitchen, and you see when it is ready.</span></li>
+      <li><svg viewBox="0 0 44 44" aria-hidden="true"><rect width="44" height="44" rx="12" fill="#dcefdf"/><rect x="14" y="10" width="16" height="24" rx="3" fill="none" stroke="#2f6b3a" stroke-width="3"/><path d="M18 22l3 3 5-6" stroke="#2f6b3a" stroke-width="3" fill="none"/></svg><span><b>Pay how you like</b>Cash with your waitress, or Telebirr and CBE Birr from your phone.</span></li>
+    </ol></div>
+  <div class="phone" aria-label="Example of the table ordering screen"><div class="screen">
+    <div class="sbar"><span>19:42</span><span>Table 4</span></div>
+    <h4>Sheger</h4><p class="t">Table 4 · <span class="am">ሰላም!</span> What would you like?</p>
+    <div class="srow"><span><b>Special tibs</b><small class="am">ልዩ ጥብስ</small> <small>· Br 650</small></span><span class="plus">+</span></div>
+    <div class="srow"><span><b>Shiro</b><small class="am">ሽሮ</small> <small>· Br 280</small></span><span class="plus">+</span></div>
+    <div class="srow"><span><b>Macchiato × 2</b><small>Br 140</small></span><span class="plus">2</span></div>
+    <div class="sbtn">Send order · Br 1,070</div>
+    <p class="t" style="margin-top:8px">Your earlier order</p>
+    <div class="status"><i class="on"></i><i class="on"></i><i></i></div>
+    <p class="t">Doro wot: cooking now, about 8 minutes</p>
+  </div></div>
+</div></section>
+
+<section class="band" id="book"><div class="in book">
+  <div><h2>Book a table</h2><p class="lead" style="margin-top:18px">Tell us when you are coming and how many you are. We call to confirm within the hour.</p>
+    <div class="facts"><div><span>Phone</span><span>+251 11 555 0142</span></div><div><span>Groups</span><span>The private room seats up to 24. Choose 9 or more guests below.</span></div><div><span>Walk-ins</span><span>Always welcome, except Thursday evenings.</span></div></div></div>
+  <div id="bookBox">
+  <form id="f" novalidate>
+    <div class="row"><div><label for="nm">Your name</label><input id="nm" autocomplete="name" placeholder="Selamawit"><p class="err" id="e-nm"></p></div>
+    <div><label for="ph">Phone</label><input id="ph" type="tel" autocomplete="tel" inputmode="tel" placeholder="09XX XXX XXX"><p class="err" id="e-ph"></p></div></div>
+    <div class="row"><div><label for="dt">Date</label><input id="dt" type="date"><p class="err" id="e-dt"></p></div>
+    <div><label for="tm">Time</label><select id="tm"></select></div></div>
+    <label for="gs">Guests</label><select id="gs"></select>
+    <label for="nt">Anything we should know?</label><textarea id="nt" rows="3" placeholder="Birthday, high chair, fasting food only..."></textarea>
+    <button class="btn pri" type="submit">Request booking</button>
+    <p class="fine">This is a demo website: requests are not sent anywhere yet.</p>
+  </form></div>
+</div></section>
+
+<div class="rim" aria-hidden="true"></div>
+<section class="band night" id="visit"><div class="in">
+  <h2 style="margin-bottom:34px">Find us</h2>
+  <div class="visit">
+    <div><h3>Where</h3><p>Bole Road, near Edna Mall<br>Addis Ababa</p><p style="margin-top:12px"><a href="https://www.google.com/maps/search/Edna+Mall+Addis+Ababa">Open in Google Maps</a></p><p style="margin-top:12px">Parking in front, free for guests.</p></div>
+    <div class="hours"><h3>Hours</h3><div><span>Every day</span><span>07:00 to 23:00</span></div><div><span>Kitchen closes</span><span>22:30</span></div><div><span>Coffee ceremony</span><span>16:00 to 18:00</span></div><div><span>Thursday music</span><span>from 19:30</span></div></div>
+    <div><h3>Takeaway</h3><p>Call ahead and we will have it packed when you arrive.</p><p style="margin-top:12px;font:400 26px 'DM Serif Display',serif">+251 11 555 0142</p></div>
+  </div>
+</div></section>
+<footer><div class="in"><span>Sheger Restaurant · <span class="am">ሸገር ሬስቶራንት</span> · Addis Ababa</span><span>Sample website: the restaurant, address and phone number are made up. <a href="../">Runs on Mesob</a></span></div></footer>
+
+<script>
+{
+const $=s=>document.querySelector(s);
+const br=n=>'Br '+n.toLocaleString('en-US');
+let seed=11;const rnd=()=>(seed=seed*16807%2147483647)/2147483647;
+function blob(cx,cy,r,fill,n=11){const p=[];for(let i=0;i<n;i++){const a=i/n*Math.PI*2,rr=r*(.84+rnd()*.26);p.push([cx+rr*Math.cos(a),cy+rr*Math.sin(a)])}let d='';p.forEach((q,i)=>{const nx=p[(i+1)%n],mx=(q[0]+nx[0])/2,my=(q[1]+nx[1])/2;d+=(i?'':`M${((p[n-1][0]+q[0])/2).toFixed(1)} ${((p[n-1][1]+q[1])/2).toFixed(1)}`)+`Q${q[0].toFixed(1)} ${q[1].toFixed(1)} ${mx.toFixed(1)} ${my.toFixed(1)}`});return `<path d="${d}Z" fill="${fill}"/>`}
+function specks(cx,cy,r,col,k,sz=2){let o='';for(let i=0;i<k;i++){const a=rnd()*Math.PI*2,d=Math.sqrt(rnd())*r;o+=`<circle cx="${(cx+d*Math.cos(a)).toFixed(1)}" cy="${(cy+d*Math.sin(a)).toFixed(1)}" r="${(sz*(.6+rnd()*.7)).toFixed(1)}" fill="${col}"/>`}return o}
+function injera(cx,cy,r,eyes){return `<circle cx="${cx}" cy="${cy}" r="${r}" fill="#d8b98e"/><circle cx="${cx}" cy="${cy}" r="${r}" fill="none" stroke="#c4a173" stroke-width="${r*.04}"/>`+specks(cx,cy,r*.96,'#b8956a',eyes,r*.012)}
+const S={misir:['#b8361e',[['#8f2414',18]]],shiro:['#d9822b',[['#b9661a',10]]],gomen:['#3f6b2a',[['#2c4f1d',14]]],kik:['#e3b33a',[['#c9971f',10]]],atkilt:['#e8c35a',[['#e07b2a',12],['#f3dfa0',8]]],beet:['#8e1f4a',[['#6d1236',10]]],salad:['#6fa83a',[['#d23b26',8],['#f4efe2',5]]],tibs:['#6b3a22',[['#3f8a3a',10],['#9a5b34',12]]],kitfo:['#7a2b1d',[['#5c1d12',12]]],ayib:['#f5f0e3',[['#e8dfcb',6]]],doro:['#6e1c12',[['#4f120a',10]]]};
+function stew(k,cx,cy,r){const[c,sp]=S[k];return blob(cx,cy,r,c)+sp.map(([col,n])=>specks(cx,cy,r*.72,col,n,r*.06)).join('')}
+
+/* hero platter */
+(function(){const rim=(r,w,c,da)=>`<circle cx="300" cy="300" r="${r}" fill="none" stroke="${c}" stroke-width="${w}" stroke-dasharray="${da}"/>`;let g=`<svg viewBox="0 0 600 600" aria-hidden="true"><ellipse cx="300" cy="318" rx="292" ry="286" fill="rgba(0,0,0,.4)"/><circle cx="300" cy="300" r="290" fill="#c79c52"/>${rim(276,22,'#e2bd6e','9 4')}${rim(258,10,'#d23b26','14 10')}${rim(258,10,'#2f6b3a','0 12 12 0')}<circle cx="300" cy="300" r="250" fill="#a97f45"/>`+injera(300,300,246,700);
+ const ring=['misir','gomen','kik','beet','shiro','salad','atkilt'],R=150;ring.forEach((k,i)=>{const a=-Math.PI/2+i/ring.length*Math.PI*2;g+=stew(k,300+R*Math.cos(a),300+R*Math.sin(a),62)});
+ g+=stew('shiro',300,300,70)+`<path d="M262 282 q38 -26 76 0" stroke="#f0d6a8" stroke-width="5" fill="none" opacity=".6"/>`;
+ for(let i=0;i<3;i++){const a=.6+i*.45;g+=`<g transform="rotate(${(a*57.3).toFixed(0)} 300 300)"><rect x="520" y="286" width="58" height="28" rx="14" fill="#cfae7f"/><rect x="520" y="286" width="58" height="28" rx="14" fill="none" stroke="#b8956a" stroke-width="2"/></g>`}
+ $('#platter').innerHTML=g+'</svg>'+[['Misir','Red lentils',50,31],['Gomen','Collard greens',70,40],['Shiro','Cooked to order',50,57],['Key sir','Beetroot',61,79]].map(([a,b,x,y])=>`<span class="tag" style="left:${x}%;top:${y}%;transform:translateX(-50%)">${a}<small>${b}</small></span>`).join('')})();
+
+/* menu */
+const MENU=[
+ {c:'Ethiopian',n:'Beyaynetu',a:'በያይነቱ',p:350,d:'Lentils, shiro, collard greens, split peas, cabbage and beetroot on fresh injera.',b:['fast','fav'],art:['misir','gomen','kik','beet','shiro']},
+ {c:'Ethiopian',n:'Special tibs',a:'ልዩ ጥብስ',p:650,d:'Beef cubes seared with onion, rosemary and green chilli, brought to the table sizzling.',b:['hot'],art:['tibs']},
+ {c:'Ethiopian',n:'Kitfo',a:'ክትፎ',p:750,d:'Minced beef with mitmita and spiced butter, with ayib and gomen. Raw, lebleb or cooked.',b:['fav'],art:['kitfo','ayib','gomen']},
+ {c:'Ethiopian',n:'Doro wot',a:'ዶሮ ወጥ',p:900,d:'Chicken slow-cooked in berbere and onions for hours, with a boiled egg and ayib.',b:['hot','fav'],art:['doro','egg','ayib']},
+ {c:'Ethiopian',n:'Shiro tegabino',a:'ሽሮ ተጋቢኖ',p:280,d:'Chickpea stew cooked to order in a clay pot, served still bubbling.',b:['fast'],art:['shiro']},
+ {c:'Ethiopian',n:'Firfir',a:'ፍርፍር',p:300,d:'Torn injera tossed in berbere sauce with spiced butter. A breakfast favourite.',b:['hot'],art:['misir','misir']},
+ {c:'International',n:'Beef burger',p:520,d:'Grilled beef patty, cheese, tomato and onion in a toasted bun, with chips.',b:[],art:'burger'},
+ {c:'International',n:'Pasta bolognese',p:380,d:'Spaghetti in a slow tomato and beef sauce, the way Addis has loved it for decades.',b:[],art:'pasta'},
+ {c:'International',n:'Club sandwich',p:450,d:'Chicken, egg, tomato and lettuce in toasted layers, with chips.',b:[],art:'club'},
+ {c:'International',n:'Vegetable pasta',p:340,d:'Spaghetti with tomato, peppers and garlic, no meat or dairy.',b:['fast'],art:'pastaV'},
+ {c:'Coffee and tea',n:'Buna',a:'ቡና',p:50,d:'Ethiopian coffee, brewed strong in the jebena.',b:['fast'],art:'buna'},
+ {c:'Coffee and tea',n:'Macchiato',a:'ማኪያቶ',p:70,d:'Addis style: espresso and steamed milk in a small glass.',b:[],art:'mac'},
+ {c:'Coffee and tea',n:'Shai',a:'ሻይ',p:40,d:'Black tea with cinnamon and clove.',b:['fast'],art:'shai'},
+ {c:'Juice and drinks',n:'Avocado juice',p:150,d:'Thick and fresh, with a little lime.',b:['fast'],art:'avo'},
+ {c:'Juice and drinks',n:'Spris',a:'ስፕሪስ',p:160,d:'Layers of avocado, mango and papaya juice. Do not stir it.',b:['fast','fav'],art:'spris'},
+ {c:'Juice and drinks',n:'Sparkling water',p:60,d:'Ethiopian mineral water, cold.',b:['fast'],art:'water'},
+ {c:'Juice and drinks',n:'Draft beer',p:110,d:'Local lager on tap.',b:[],art:'beer'}];
+const CATS=['Ethiopian','International','Coffee and tea','Juice and drinks'];
+const BADGE={fast:['b-fast','Fasting'],hot:['b-hot','Spicy'],fav:['b-fav','House favourite']};
+function glass(layers,foam,h=120){let y=170,o=`<path d="M70 50 L82 170 L118 170 L130 50 Z" fill="#ffffff" opacity=".35"/>`;const tot=layers.reduce((s,l)=>s+l[1],0);layers.forEach(([c,f])=>{const hh=h*f/tot,y2=y-hh,w1=12*(170-y)/120,w2=12*(170-y2)/120;o+=`<path d="M${82-w1} ${y} L${118+w1} ${y} L${118+w2} ${y2} L${82-w2} ${y2} Z" fill="${c}"/>`;y=y2});if(foam)o+=`<ellipse cx="100" cy="${y}" rx="${30+12*(170-y)/120*0}" ry="7" fill="${foam}"/>`;return o+`<path d="M70 50 L82 170 L118 170 L130 50" fill="none" stroke="#9b8576" stroke-width="3"/>`}
+function art(m){seed=m.p+m.n.length*31;let g='';
+ if(Array.isArray(m.art)){g+=`<circle cx="100" cy="72" r="68" fill="#efe6da"/>`+injera(100,72,60,90);const k=m.art,pos=k.length===1?[[100,72,34]]:k.length<=3?[[78,60,24],[124,64,22],[98,100,20]]:[[72,52,20],[124,48,20],[138,92,18],[96,104,20],[100,74,16]];k.forEach((s,i)=>{const[x,y,r]=pos[i%pos.length];g+=s==='egg'?`<ellipse cx="${x}" cy="${y}" rx="${r*.8}" ry="${r*.6}" fill="#fbf7ee"/><circle cx="${x}" cy="${y}" r="${r*.32}" fill="#f0b429"/>`:stew(s,x,y,r)});if(m.n.startsWith('Shiro'))g=`<circle cx="100" cy="74" r="60" fill="#3a2418"/><circle cx="100" cy="74" r="52" fill="#5a3826"/>`+stew('shiro',100,74,44)+specks(100,74,30,'#f3c98a',8,2)}
+ else if(['burger','pasta','club','pastaV'].includes(m.art)){g+=`<circle cx="100" cy="74" r="66" fill="#f4efe8"/><circle cx="100" cy="74" r="58" fill="none" stroke="#e1d6c8" stroke-width="2"/>`;
+  if(m.art==='burger'){g+=`<circle cx="86" cy="72" r="36" fill="#c98a3c"/>`+specks(86,66,24,'#f6e7c4',12,2)+[0,1,2,3,4,5].map(i=>`<rect x="${122+i*4}" y="${48+i*7}" width="30" height="8" rx="3" fill="#e8b54a" transform="rotate(${-20+i*8} 136 ${52+i*7})"/>`).join('')}
+  else if(m.art==='club'){g+=`<path d="M48 104 L100 40 L100 104 Z" fill="#e9c99a" stroke="#c99a5c" stroke-width="3"/><path d="M104 104 L104 40 L156 104 Z" fill="#e9c99a" stroke="#c99a5c" stroke-width="3"/><path d="M56 98 L98 48" stroke="#5a9a38" stroke-width="4"/><path d="M110 96 L110 52" stroke="#d23b26" stroke-width="4"/>`}
+  else{const col=m.art==='pasta'?'#b8361e':'#d65a2a';for(let i=0;i<9;i++)g+=`<path d="M${70+rnd()*20} ${50+rnd()*40} q${20+rnd()*20} ${-14+rnd()*28} ${40+rnd()*20} ${-6+rnd()*12}" stroke="#f0d48a" stroke-width="5" fill="none" stroke-linecap="round"/>`;g+=blob(100,72,26,col)+specks(100,72,18,m.art==='pasta'?'#7a1f10':'#3f8a3a',8,3)}}
+ else{g+=`<ellipse cx="100" cy="172" rx="44" ry="6" fill="rgba(0,0,0,.12)"/>`;
+  const G={buna:()=>`<path d="M74 110 L82 168 L118 168 L126 110 Z" fill="#fbf7ee" stroke="#9b8576" stroke-width="3"/><ellipse cx="100" cy="112" rx="26" ry="6" fill="#3a1f12"/><path d="M84 122 h32" stroke="#2f6b3a" stroke-width="3"/>`,mac:()=>glass([['#5a3220',2],['#b07a4f',2],['#e8d2b4',1.4]],'#fbf3e4',96),shai:()=>glass([['#b5531c',3]],null,90),avo:()=>glass([['#8fb13d',3]],'#b8cf6e',110),spris:()=>glass([['#8fb13d',1.2],['#f1a82b',1],['#e56a3a',1]],null,112),water:()=>glass([['#cfe6ee',3]],null,104)+specks(100,120,14,'#ffffff',8,2),beer:()=>glass([['#e0a127',3]],'#fbf7ee',100)};g+=G[m.art]()}
+ return `<svg viewBox="0 0 200 180" aria-hidden="true">${g}</svg>`}
+let cat='Ethiopian';
+const fastOnly=$('#fastOnly');
+function menu(){$('#tabs').innerHTML=CATS.map(c=>`<button class="tab" role="tab" aria-selected="${c===cat}" data-c="${c}">${c}</button>`).join('');
+ const list=MENU.filter(m=>m.c===cat&&(!fastOnly.checked||m.b.includes('fast')));
+ $('#dishes').innerHTML=list.map(m=>`<article class="dish"><div class="pic">${art(m)}</div><div class="top"><h3>${m.n}</h3><span class="pr">${br(m.p)}</span></div><p>${m.a?`<span class="am amn">${m.a}</span>`:''}</p><p>${m.d}</p><div class="badges">${m.b.map(x=>`<span class="b ${BADGE[x][0]}">${BADGE[x][1]}</span>`).join('')}</div></article>`).join('')||'<p class="empty">No fasting dishes in this section. Try Ethiopian or the drinks.</p>'}
+$('#tabs').addEventListener('click',e=>{const b=e.target.closest('[data-c]');if(b){cat=b.dataset.c;menu()}});
+fastOnly.addEventListener('change',menu);
+
+/* time in Addis */
+const parts=Object.fromEntries(new Intl.DateTimeFormat('en-GB',{timeZone:'Africa/Addis_Ababa',weekday:'long',hour:'2-digit',minute:'2-digit',hourCycle:'h23'}).formatToParts(new Date()).map(p=>[p.type,p.value]));
+const mins=+parts.hour*60+ +parts.minute,isOpen=mins>=420&&mins<1380;
+$('#openTxt').textContent=isOpen?`Open now · until 23:00 · ${parts.weekday}`:'Closed now · opens at 07:00';
+if(!isOpen)$('#open').classList.add('closed');
+if(parts.weekday==='Wednesday'||parts.weekday==='Friday'){$('#fastday').innerHTML=`<p class="fastday">Today is ${parts.weekday}, a fasting day. Every dish marked Fasting has no meat, dairy or eggs.</p>`;fastOnly.checked=true}
+menu();
+
+/* coffee ceremony */
+(function(){let g=`<rect x="0" y="330" width="520" height="110" fill="#2a1a12"/>`;seed=5;for(let i=0;i<90;i++){const x=rnd()*520,y=335+rnd()*100;g+=`<path d="M${x.toFixed(0)} ${y.toFixed(0)} l${(-6+rnd()*12).toFixed(0)} -18" stroke="${rnd()>.5?'#3f6b2a':'#5c8a3a'}" stroke-width="3" stroke-linecap="round"/>`}
+ g+=`<ellipse cx="350" cy="372" rx="150" ry="26" fill="#6b3f22"/><ellipse cx="350" cy="364" rx="150" ry="26" fill="#8a5530"/>`;
+ [[270,330],[310,338],[350,342],[390,338],[430,330],[330,312],[370,312]].forEach(([x,y])=>{g+=`<path d="M${x-17} ${y-26} L${x-12} ${y} L${x+12} ${y} L${x+17} ${y-26} Z" fill="#fbf7ee"/><ellipse cx="${x}" cy="${y-26}" rx="17" ry="4" fill="#3a1f12"/><path d="M${x-14} ${y-14} h28" stroke="#c8321c" stroke-width="2"/>`});
+ g+=`<ellipse cx="140" cy="352" rx="78" ry="14" fill="rgba(0,0,0,.35)"/><path d="M140 140 C110 140 108 175 118 200 C70 220 58 300 92 340 L188 340 C222 300 210 220 162 200 C172 175 170 140 140 140 Z" fill="#5a3422"/><path d="M98 330 C70 290 84 230 126 210" stroke="#8a5530" stroke-width="10" fill="none" stroke-linecap="round"/>`;
+ g+=`<path d="M180 230 Q228 206 236 168" stroke="#5a3422" stroke-width="16" fill="none" stroke-linecap="round"/><path d="M118 214 Q78 236 86 282" stroke="#5a3422" stroke-width="12" fill="none" stroke-linecap="round"/><ellipse cx="140" cy="142" rx="22" ry="7" fill="#3a2418"/><path d="M128 142 h24 v-20 h-24z" fill="#c8a06a"/><path d="M132 122 q8 -14 16 0" fill="#d8b98e"/>`;
+ g+=`<g id="steam" fill="none" stroke="#f6ede4" stroke-width="4" stroke-linecap="round" opacity=".7">${[0,1,2].map(i=>`<path d="M${226+i*10} ${150-i*4} q-12 -20 0 -40 q12 -20 0 -40" style="animation:rise 3s ${i*.9}s ease-in-out infinite"/>`).join('')}</g>`;
+ g+=`<rect x="410" y="250" width="22" height="80" rx="4" fill="#6b3f22"/><ellipse cx="421" cy="250" rx="30" ry="9" fill="#8a5530"/>`+specks(421,240,16,'#f6ede4',14,4)+`<path d="M450 300 q8 -30 -6 -60 q-10 -20 4 -50" stroke="#cdbcae" stroke-width="2" fill="none" opacity=".5"/>`;
+ $('#cer').innerHTML=g})();
+
+/* events */
+const EV=[['Every Thursday · 19:30','Masinko and krar night','Live traditional music in the main room, with a dance floor once the second set starts. Booking strongly advised.','Thursday music night','#8e1f4a','music'],['Every Sunday · 09:00 to 13:00','Family breakfast','Chechebsa, firfir, fresh juice and buna. Children under six eat free from the breakfast menu.','Sunday breakfast','#e7a823','sun'],['Any day · up to 24 guests','The private room','Birthdays, graduations and company lunches with a set menu and your own coffee ceremony.','Private room','#2f6b3a','room']];
+function evArt(col,kind){seed=kind.length*7;let g=`<rect width="400" height="150" fill="${col}"/>`;if(kind==='music'){for(let i=0;i<14;i++)g+=`<circle cx="${(rnd()*400).toFixed(0)}" cy="${(rnd()*150).toFixed(0)}" r="${(2+rnd()*3).toFixed(1)}" fill="#f6ede4" opacity=".5"/>`;g+=`<path d="M170 128 L200 40 L230 128 Z" fill="#f6ede4" opacity=".92"/><rect x="196" y="12" width="8" height="40" fill="#f6ede4"/><path d="M200 18 L170 30" stroke="#f6ede4" stroke-width="3"/><path d="M90 140 Q150 60 210 140" stroke="#e7a823" stroke-width="4" fill="none"/><path d="M250 130 Q290 70 330 130" stroke="#e7a823" stroke-width="4" fill="none"/>`}
+ else if(kind==='sun'){g+=`<circle cx="200" cy="150" r="70" fill="#fbeccb"/>`+[...Array(9)].map((_,i)=>{const a=Math.PI+(i+.5)/9*Math.PI;return `<line x1="${200+86*Math.cos(a)}" y1="${150+86*Math.sin(a)}" x2="${200+112*Math.cos(a)}" y2="${150+112*Math.sin(a)}" stroke="#fbeccb" stroke-width="6" stroke-linecap="round"/>`}).join('')}
+ else{g+=`<ellipse cx="200" cy="96" rx="150" ry="36" fill="#244f2c"/><ellipse cx="200" cy="90" rx="150" ry="36" fill="#e2bd6e"/>`+[...Array(10)].map((_,i)=>{const a=i/10*Math.PI*2;return `<circle cx="${(200+170*Math.cos(a)).toFixed(0)}" cy="${(90+50*Math.sin(a)).toFixed(0)}" r="12" fill="#f6ede4"/>`}).join('')}return `<svg viewBox="0 0 400 150" preserveAspectRatio="xMidYMid slice" aria-hidden="true">${g}</svg>`}
+$('#evs').innerHTML=EV.map((e,i)=>`<article class="ev"><div class="art">${evArt(e[4],e[5])}</div><div class="body"><span class="day">${e[0]}</span><h3>${e[1]}</h3><p>${e[2]}</p><a class="btn" href="#book" data-ev="${i}">Book for this</a></div></article>`).join('');
+$('#evs').addEventListener('click',e=>{const a=e.target.closest('[data-ev]');if(!a)return;const nt=$('#nt');if(nt){nt.value=EV[+a.dataset.ev][3]+'. ';if(a.dataset.ev==='2')$('#gs').value='12'}});
+
+/* booking */
+const tm=$('#tm'),gs=$('#gs'),dt=$('#dt');
+for(let m=420;m<=1320;m+=30){const v=String(Math.floor(m/60)).padStart(2,'0')+':'+String(m%60).padStart(2,'0');tm.innerHTML+=`<option${v==='19:30'?' selected':''}>${v}</option>`}
+gs.innerHTML=[1,2,3,4,5,6,7,8].map(n=>`<option value="${n}"${n===2?' selected':''}>${n} ${n===1?'guest':'guests'}</option>`).join('')+'<option value="12">9 to 24 guests, private room</option>';
+const today=new Date(),iso=d=>d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
+dt.min=iso(today);const tmr=new Date(today);tmr.setDate(tmr.getDate()+1);dt.value=iso(tmr);
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+['nm','ph','dt'].forEach(id=>$('#'+id).addEventListener('input',()=>{$('#e-'+id).textContent=''}));
+$('#f').addEventListener('submit',e=>{e.preventDefault();let ok=true;const nm=$('#nm').value.trim(),ph=$('#ph').value.replace(/[\s-]/g,'');
+ if(nm.length<2){$('#e-nm').textContent='Please tell us your name.';ok=false}
+ if(!/^(\+251|0)?9\d{8}$|^(\+251|0)?7\d{8}$/.test(ph)){$('#e-ph').textContent='Enter an Ethiopian mobile number, like 0911 234 567.';ok=false}
+ if(!dt.value||dt.value<dt.min){$('#e-dt').textContent='Choose today or a later date.';ok=false}
+ if(!ok)return;
+ const d=new Date(dt.value+'T12:00'),ds=d.toLocaleDateString('en-GB',{weekday:'long',day:'numeric',month:'long'}),g=gs.options[gs.selectedIndex].text;
+ $('#bookBox').innerHTML=`<div class="done" tabindex="-1" id="done"><h3>Request received, ${esc(nm.split(' ')[0])}</h3><p class="lead" style="margin-top:10px">We will call ${esc($('#ph').value.trim())} within the hour to confirm.</p><div class="facts"><div><span>When</span><span>${ds} at ${tm.value}</span></div><div><span>Guests</span><span>${esc(g)}</span></div>${$('#nt').value.trim()?`<div><span>Note</span><span>${esc($('#nt').value.trim())}</span></div>`:''}</div><p class="fine">This is a demo website: no request was actually sent.</p><button class="btn" style="margin-top:18px" id="again">Make another booking</button></div>`;
+ $('#done').focus();$('#again').addEventListener('click',()=>location.reload())});
+}
+</script>
+</body>
+</html>
