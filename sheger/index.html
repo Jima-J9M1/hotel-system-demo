@@ -145,6 +145,29 @@ footer .in{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
 @keyframes rise{0%{opacity:0;transform:translateY(8px)}40%{opacity:.7}100%{opacity:0;transform:translateY(-22px)}}
 @media(max-width:980px){.links{display:none}.hero .in,.story,.coffee,.qr,.book{grid-template-columns:minmax(0,1fr)}.platter{width:min(100%,560px);margin:0 auto;justify-self:center}.events,.visit{grid-template-columns:minmax(0,1fr)}.hero .in{min-height:0}}
 @media(max-width:600px){.nums,.rounds{grid-template-columns:minmax(0,1fr)}.row{grid-template-columns:minmax(0,1fr)}.tag{font-size:12px;padding:5px 9px}.tag small{display:none}nav .btn{padding:0 14px}}
+
+.hero{min-height:min(86svh,760px);display:grid;align-items:end;background:#1c110c center/cover no-repeat;position:relative}
+.hero::before{content:'';position:absolute;inset:0;background:linear-gradient(90deg,rgba(20,11,7,.92) 0%,rgba(20,11,7,.7) 45%,rgba(20,11,7,.15) 100%),linear-gradient(0deg,rgba(20,11,7,.6),transparent 40%)}
+.hero .in{display:block;min-height:0;max-width:1240px;width:100%}
+.hero .copy{max-width:640px}
+.ph{background:var(--soft);position:relative;overflow:hidden}
+.ph img{width:100%;height:100%;object-fit:cover;display:block}
+.ph.miss img{display:none}
+.ph.miss::after{content:attr(data-alt);position:absolute;inset:0;display:grid;place-items:center;padding:16px;text-align:center;color:var(--mute);font-size:14px}
+.dish .ph{aspect-ratio:4/3;border-radius:16px;margin-bottom:8px}
+.storyimg{aspect-ratio:4/3;border-radius:24px;margin-top:30px}
+.plist{margin-top:30px;background:var(--card);border:1px solid var(--line);border-radius:24px;padding:8px 22px}
+.plist h3{font-size:22px;padding:14px 0 4px}
+.pi{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:4px 16px;padding:14px 0;border-top:1px solid var(--line)}
+.pi b{font-weight:600;font-size:17px}
+.pi .pr{font-weight:600;white-space:nowrap}
+.pi p{grid-column:1/-1;color:var(--mute);font-size:15px}
+.cphotos{display:grid;grid-template-columns:2fr 1fr;grid-template-rows:1fr 1fr;gap:12px;aspect-ratio:5/4}
+.cphotos .ph{border-radius:20px}
+.cphotos .ph:first-child{grid-row:1/3}
+.ev .ph{height:190px}
+.street{height:clamp(220px,32vw,380px);border-radius:24px;margin-bottom:34px}
+.credit{font-size:13px;color:#9c8b7f;margin-top:8px}
 </style>
 </head>
 <body>
@@ -154,19 +177,19 @@ footer .in{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
   <a class="btn pri" href="#book">Book a table</a>
 </div></nav>
 
-<header class="hero" id="top"><div class="in">
-  <div>
+<header class="hero" id="top" role="img" aria-label="An Ethiopian platter of injera topped with stews"><div class="in" style="position:relative">
+  <div class="copy">
     <span class="open" id="open"><i></i><span id="openTxt">Open today 07:00 to 23:00</span></span>
     <h1>Addis food, <em>shared</em> the way it should be.</h1>
     <p class="lead">Fresh teff injera every morning, stews slow-cooked in our own berbere, and a coffee ceremony every afternoon. Come hungry, bring people.</p>
     <div class="acts"><a class="btn pri" href="#menu">See the menu</a><a class="btn" href="#book">Book a table</a></div>
   </div>
-  <div class="platter" id="platter" role="img" aria-label="A beyaynetu platter seen from above: injera topped with lentils, shiro, collard greens, split peas, cabbage, beetroot and salad"></div>
 </div></header>
 
 <section class="band" id="story"><div class="in story">
   <div><h2>A kitchen that starts three days early</h2>
-    <div class="nums"><div><b>3</b><span>days to ferment our injera</span></div><div><b>16:00</b><span>coffee ceremony, every day</span></div><div><b>7</b><span>days a week, 07:00 to 23:00</span></div></div></div>
+    <div class="nums"><div><b>3</b><span>days to ferment our injera</span></div><div><b>16:00</b><span>coffee ceremony, every day</span></div><div><b>7</b><span>days a week, 07:00 to 23:00</span></div></div>
+    <div class="ph storyimg" data-img="injera" data-alt="Fresh injera on a tray"></div></div>
   <div class="lead" style="max-width:none"><p>Our injera batter rests for three days before it meets the mitad, which gives it the sour taste and soft eyes you remember from home.</p><p>The berbere is dried, ground and blended in our own kitchen. Shiro is cooked to order in a clay pot and reaches your table still bubbling. On Wednesdays and Fridays, half the menu is fasting food, and it is some of our best.</p></div>
 </div></section>
 
@@ -175,10 +198,11 @@ footer .in{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
     <div><div class="tabs" role="tablist" id="tabs"></div><label class="fast"><input type="checkbox" id="fastOnly"> Fasting dishes only</label></div></div>
   <div id="fastday"></div>
   <div class="grid" id="dishes"></div>
+  <div id="plist"></div>
 </div></section>
 
 <section class="band night" id="coffee"><div class="in coffee">
-  <div class="cerem"><svg viewBox="0 0 520 440" id="cer" role="img" aria-label="A jebena coffee pot with steam, small sini cups on a tray, and grass on the floor"></svg></div>
+  <div class="cphotos"><div class="ph" data-img="pour" data-alt="Coffee poured from a jebena"></div><div class="ph" data-img="beans" data-alt="Roasted coffee beans"></div><div class="ph" data-img="popcorn" data-alt="Popcorn"></div></div>
   <div><h2>The coffee ceremony, every afternoon at four</h2>
     <p class="lead" style="margin-top:18px">Green beans roasted at the table, ground by hand and brewed in a clay jebena, served with popcorn and incense. Stay for all three rounds.</p>
     <div class="rounds"><div><b class="am">አቦል</b><span>Abol, the first and strongest round</span></div><div><b class="am">ቶና</b><span>Tona, the second, softer and slower</span></div><div><b class="am">በረካ</b><span>Baraka, the third, the blessing</span></div></div>
@@ -189,7 +213,6 @@ footer .in{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
   <div class="mhead"><div><h2>Evenings at Sheger</h2><p class="lead" style="margin-top:12px">Something on most weeks. Book ahead for Thursdays, they fill up.</p></div></div>
   <div class="events" id="evs"></div>
 </div></section>
-
 <section class="band soft" id="table"><div class="in qr">
   <div><h2>Order from your table</h2>
     <p class="lead" style="margin-top:18px">Every table has a small QR code. Scan it with your phone camera to see the menu in Amharic or English, order, and follow your food from the kitchen.</p>
@@ -229,6 +252,7 @@ footer .in{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
 
 <div class="rim" aria-hidden="true"></div>
 <section class="band night" id="visit"><div class="in">
+  <div class="ph street" data-img="street" data-alt="A street in Addis Ababa"></div>
   <h2 style="margin-bottom:34px">Find us</h2>
   <div class="visit">
     <div><h3>Where</h3><p>Bole Road, near Edna Mall<br>Addis Ababa</p><p style="margin-top:12px"><a href="https://www.google.com/maps/search/Edna+Mall+Addis+Ababa">Open in Google Maps</a></p><p style="margin-top:12px">Parking in front, free for guests.</p></div>
@@ -236,66 +260,72 @@ footer .in{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
     <div><h3>Takeaway</h3><p>Call ahead and we will have it packed when you arrive.</p><p style="margin-top:12px;font:400 26px 'DM Serif Display',serif">+251 11 555 0142</p></div>
   </div>
 </div></section>
-<footer><div class="in"><span>Sheger Restaurant · <span class="am">ሸገር ሬስቶራንት</span> · Addis Ababa</span><span>Sample website: the restaurant, address and phone number are made up. <a href="../">Runs on Mesob</a></span></div></footer>
-
+<footer><div class="in"><span>Sheger Restaurant · <span class="am">ሸገር ሬስቶራንት</span> · Addis Ababa</span><span>Sample website: the restaurant, address and phone number are made up. <a href="../">Runs on Mesob</a></span></div>
+<div class="in"><p class="credit" id="credits"></p></div></footer>
 <script>
 {
 const $=s=>document.querySelector(s);
 const br=n=>'Br '+n.toLocaleString('en-US');
-let seed=11;const rnd=()=>(seed=seed*16807%2147483647)/2147483647;
-function blob(cx,cy,r,fill,n=11){const p=[];for(let i=0;i<n;i++){const a=i/n*Math.PI*2,rr=r*(.84+rnd()*.26);p.push([cx+rr*Math.cos(a),cy+rr*Math.sin(a)])}let d='';p.forEach((q,i)=>{const nx=p[(i+1)%n],mx=(q[0]+nx[0])/2,my=(q[1]+nx[1])/2;d+=(i?'':`M${((p[n-1][0]+q[0])/2).toFixed(1)} ${((p[n-1][1]+q[1])/2).toFixed(1)}`)+`Q${q[0].toFixed(1)} ${q[1].toFixed(1)} ${mx.toFixed(1)} ${my.toFixed(1)}`});return `<path d="${d}Z" fill="${fill}"/>`}
-function specks(cx,cy,r,col,k,sz=2){let o='';for(let i=0;i<k;i++){const a=rnd()*Math.PI*2,d=Math.sqrt(rnd())*r;o+=`<circle cx="${(cx+d*Math.cos(a)).toFixed(1)}" cy="${(cy+d*Math.sin(a)).toFixed(1)}" r="${(sz*(.6+rnd()*.7)).toFixed(1)}" fill="${col}"/>`}return o}
-function injera(cx,cy,r,eyes){return `<circle cx="${cx}" cy="${cy}" r="${r}" fill="#d8b98e"/><circle cx="${cx}" cy="${cy}" r="${r}" fill="none" stroke="#c4a173" stroke-width="${r*.04}"/>`+specks(cx,cy,r*.96,'#b8956a',eyes,r*.012)}
-const S={misir:['#b8361e',[['#8f2414',18]]],shiro:['#d9822b',[['#b9661a',10]]],gomen:['#3f6b2a',[['#2c4f1d',14]]],kik:['#e3b33a',[['#c9971f',10]]],atkilt:['#e8c35a',[['#e07b2a',12],['#f3dfa0',8]]],beet:['#8e1f4a',[['#6d1236',10]]],salad:['#6fa83a',[['#d23b26',8],['#f4efe2',5]]],tibs:['#6b3a22',[['#3f8a3a',10],['#9a5b34',12]]],kitfo:['#7a2b1d',[['#5c1d12',12]]],ayib:['#f5f0e3',[['#e8dfcb',6]]],doro:['#6e1c12',[['#4f120a',10]]]};
-function stew(k,cx,cy,r){const[c,sp]=S[k];return blob(cx,cy,r,c)+sp.map(([col,n])=>specks(cx,cy,r*.72,col,n,r*.06)).join('')}
+const U=(id,w=900)=>`https://images.unsplash.com/photo-${id}?auto=format&fit=crop&w=${w}&q=72`;
+const IMG={
+ hero:[U('1765338915553-6e02fe63ff4f',1800),'Brooke Balentine','u'],
+ injera:['https://pd.w.org/2026/04/74669de6421506d12.61120238-1536x1152.jpg','Joan Namunina','w'],
+ beya:[U('1765338915553-6e02fe63ff4f'),'Brooke Balentine','u'],
+ tibs:['https://pd.w.org/2026/03/83469cc2f49602af5.58740492-768x576.jpg','Mohammed Kateregga','w'],
+ tere:[U('1781685891312-2d8f7eba4c1d'),'Msganaw Wogaso','u'],
+ burger:[U('1561758033-d89a9ad46330'),'Jonathan Borba','u'],
+ bolo:[U('1761545832779-bc0b4290fc5e'),'Zayed Ahmed Zadu','u'],
+ club:[U('1676300184084-de35d56a9a70'),'Orkun Orcan','u'],
+ vpasta:[U('1657807058952-4fc53587819b'),'Alazar Kassahun','u'],
+ buna:[U('1643372672636-34d776a7e032'),'Alazar Kassahun','u'],
+ mac:[U('1563090308-5a7889e40542'),'Kenny Kennethh','u'],
+ shai:[U('1703112544229-7f148a98c595'),'A Studios','u'],
+ avo:[U('1693042442021-41423615ce89'),'Dixit Dhinakaran','u'],
+ spris:[U('1583577612013-4fecf7bf8f13'),'Dhiren Maru','u'],
+ water:[U('1549746423-e5fe9cafded8'),'Dmitry Dreyer','u'],
+ beer:[U('1608270586620-248524c67de9'),'Engin Akyurt','u'],
+ pour:[U('1774529233247-d3f34ed11994',1100),'Amanuel Kebede','u'],
+ beans:[U('1422207109431-97544339f995',600),'Alex Padurariu','u'],
+ popcorn:[U('1512149177596-f817c7ef5d4c',600),'charlesdeluvio','u'],
+ music:[U('1778848268262-3a9e40cae69c'),'Bemnet Mesfin','u'],
+ breakfast:[U('1623691751184-9624c754985b'),'Fernanda Martinez','u'],
+ room:[U('1595007163136-82fb6da20c05'),'Nabeel Hussain','u'],
+ street:[U('1643450408449-91e5e0ab1fd1',1800),'Moti Abebe','u']};
+const ph=(k,alt)=>`<div class="ph" data-img="${k}" data-alt="${alt}"></div>`;
+function fill(root=document){root.querySelectorAll('.ph[data-img]:not([data-done])').forEach(d=>{d.dataset.done=1;const i=document.createElement('img');i.src=IMG[d.dataset.img][0];i.alt=d.dataset.alt;i.loading='lazy';i.decoding='async';i.onerror=()=>d.classList.add('miss');d.prepend(i)})}
+const hero=new Image();hero.onload=()=>{$('#top').style.backgroundImage=`url("${IMG.hero[0]}")`};hero.src=IMG.hero[0];
 
-/* hero platter */
-(function(){const rim=(r,w,c,da)=>`<circle cx="300" cy="300" r="${r}" fill="none" stroke="${c}" stroke-width="${w}" stroke-dasharray="${da}"/>`;let g=`<svg viewBox="0 0 600 600" aria-hidden="true"><ellipse cx="300" cy="318" rx="292" ry="286" fill="rgba(0,0,0,.4)"/><circle cx="300" cy="300" r="290" fill="#c79c52"/>${rim(276,22,'#e2bd6e','9 4')}${rim(258,10,'#d23b26','14 10')}${rim(258,10,'#2f6b3a','0 12 12 0')}<circle cx="300" cy="300" r="250" fill="#a97f45"/>`+injera(300,300,246,700);
- const ring=['misir','gomen','kik','beet','shiro','salad','atkilt'],R=150;ring.forEach((k,i)=>{const a=-Math.PI/2+i/ring.length*Math.PI*2;g+=stew(k,300+R*Math.cos(a),300+R*Math.sin(a),62)});
- g+=stew('shiro',300,300,70)+`<path d="M262 282 q38 -26 76 0" stroke="#f0d6a8" stroke-width="5" fill="none" opacity=".6"/>`;
- for(let i=0;i<3;i++){const a=.6+i*.45;g+=`<g transform="rotate(${(a*57.3).toFixed(0)} 300 300)"><rect x="520" y="286" width="58" height="28" rx="14" fill="#cfae7f"/><rect x="520" y="286" width="58" height="28" rx="14" fill="none" stroke="#b8956a" stroke-width="2"/></g>`}
- $('#platter').innerHTML=g+'</svg>'+[['Misir','Red lentils',50,31],['Gomen','Collard greens',70,40],['Shiro','Cooked to order',50,57],['Key sir','Beetroot',61,79]].map(([a,b,x,y])=>`<span class="tag" style="left:${x}%;top:${y}%;transform:translateX(-50%)">${a}<small>${b}</small></span>`).join('')})();
-
-/* menu */
 const MENU=[
- {c:'Ethiopian',n:'Beyaynetu',a:'በያይነቱ',p:350,d:'Lentils, shiro, collard greens, split peas, cabbage and beetroot on fresh injera.',b:['fast','fav'],art:['misir','gomen','kik','beet','shiro']},
- {c:'Ethiopian',n:'Special tibs',a:'ልዩ ጥብስ',p:650,d:'Beef cubes seared with onion, rosemary and green chilli, brought to the table sizzling.',b:['hot'],art:['tibs']},
- {c:'Ethiopian',n:'Kitfo',a:'ክትፎ',p:750,d:'Minced beef with mitmita and spiced butter, with ayib and gomen. Raw, lebleb or cooked.',b:['fav'],art:['kitfo','ayib','gomen']},
- {c:'Ethiopian',n:'Doro wot',a:'ዶሮ ወጥ',p:900,d:'Chicken slow-cooked in berbere and onions for hours, with a boiled egg and ayib.',b:['hot','fav'],art:['doro','egg','ayib']},
- {c:'Ethiopian',n:'Shiro tegabino',a:'ሽሮ ተጋቢኖ',p:280,d:'Chickpea stew cooked to order in a clay pot, served still bubbling.',b:['fast'],art:['shiro']},
- {c:'Ethiopian',n:'Firfir',a:'ፍርፍር',p:300,d:'Torn injera tossed in berbere sauce with spiced butter. A breakfast favourite.',b:['hot'],art:['misir','misir']},
- {c:'International',n:'Beef burger',p:520,d:'Grilled beef patty, cheese, tomato and onion in a toasted bun, with chips.',b:[],art:'burger'},
- {c:'International',n:'Pasta bolognese',p:380,d:'Spaghetti in a slow tomato and beef sauce, the way Addis has loved it for decades.',b:[],art:'pasta'},
- {c:'International',n:'Club sandwich',p:450,d:'Chicken, egg, tomato and lettuce in toasted layers, with chips.',b:[],art:'club'},
- {c:'International',n:'Vegetable pasta',p:340,d:'Spaghetti with tomato, peppers and garlic, no meat or dairy.',b:['fast'],art:'pastaV'},
- {c:'Coffee and tea',n:'Buna',a:'ቡና',p:50,d:'Ethiopian coffee, brewed strong in the jebena.',b:['fast'],art:'buna'},
- {c:'Coffee and tea',n:'Macchiato',a:'ማኪያቶ',p:70,d:'Addis style: espresso and steamed milk in a small glass.',b:[],art:'mac'},
- {c:'Coffee and tea',n:'Shai',a:'ሻይ',p:40,d:'Black tea with cinnamon and clove.',b:['fast'],art:'shai'},
- {c:'Juice and drinks',n:'Avocado juice',p:150,d:'Thick and fresh, with a little lime.',b:['fast'],art:'avo'},
- {c:'Juice and drinks',n:'Spris',a:'ስፕሪስ',p:160,d:'Layers of avocado, mango and papaya juice. Do not stir it.',b:['fast','fav'],art:'spris'},
- {c:'Juice and drinks',n:'Sparkling water',p:60,d:'Ethiopian mineral water, cold.',b:['fast'],art:'water'},
- {c:'Juice and drinks',n:'Draft beer',p:110,d:'Local lager on tap.',b:[],art:'beer'}];
+ {c:'Ethiopian',n:'Beyaynetu',a:'በያይነቱ',p:350,d:'Lentils, shiro, collard greens, split peas, cabbage and beetroot on fresh injera.',b:['fast','fav'],img:'beya'},
+ {c:'Ethiopian',n:'Special tibs',a:'ልዩ ጥብስ',p:650,d:'Beef cubes seared with onion, rosemary and green chilli, brought to the table sizzling.',b:['hot'],img:'tibs'},
+ {c:'Ethiopian',n:'Tere sega',a:'ጥሬ ሥጋ',p:1100,d:'Fresh raw beef cut at the table, with awaze, mitmita and injera. For two.',b:['fav'],img:'tere'},
+ {c:'Ethiopian',n:'Kitfo',a:'ክትፎ',p:750,d:'Minced beef with mitmita and spiced butter, with ayib and gomen. Raw, lebleb or cooked.',b:[]},
+ {c:'Ethiopian',n:'Doro wot',a:'ዶሮ ወጥ',p:900,d:'Chicken slow-cooked in berbere and onions for hours, with a boiled egg and ayib.',b:['hot']},
+ {c:'Ethiopian',n:'Shiro tegabino',a:'ሽሮ ተጋቢኖ',p:280,d:'Chickpea stew cooked to order in a clay pot, served still bubbling.',b:['fast']},
+ {c:'Ethiopian',n:'Firfir',a:'ፍርፍር',p:300,d:'Torn injera tossed in berbere sauce with spiced butter. A breakfast favourite.',b:['hot']},
+ {c:'International',n:'Beef burger',p:520,d:'Grilled beef patty, cheese, tomato and onion in a toasted bun, with chips.',b:[],img:'burger'},
+ {c:'International',n:'Pasta bolognese',p:380,d:'Spaghetti in a slow tomato and beef sauce, the way Addis has loved it for decades.',b:[],img:'bolo'},
+ {c:'International',n:'Club sandwich',p:450,d:'Chicken, egg, tomato and lettuce in toasted layers, with chips.',b:[],img:'club'},
+ {c:'International',n:'Vegetable pasta',p:340,d:'Spaghetti with broccoli, tomato and garlic, no meat or dairy.',b:['fast'],img:'vpasta'},
+ {c:'Coffee and tea',n:'Buna',a:'ቡና',p:50,d:'Ethiopian coffee, brewed strong in the jebena.',b:['fast'],img:'buna'},
+ {c:'Coffee and tea',n:'Macchiato',a:'ማኪያቶ',p:70,d:'Addis style: espresso and steamed milk in a small glass.',b:[],img:'mac'},
+ {c:'Coffee and tea',n:'Shai',a:'ሻይ',p:40,d:'Black tea with cinnamon and clove.',b:['fast'],img:'shai'},
+ {c:'Juice and drinks',n:'Avocado juice',p:150,d:'Thick and fresh, with a little lime.',b:['fast'],img:'avo'},
+ {c:'Juice and drinks',n:'Spris',a:'ስፕሪስ',p:160,d:'Layers of avocado, mango and papaya juice. Do not stir it.',b:['fast','fav'],img:'spris'},
+ {c:'Juice and drinks',n:'Sparkling water',p:60,d:'Ethiopian mineral water, cold.',b:['fast'],img:'water'},
+ {c:'Juice and drinks',n:'Draft beer',p:110,d:'Local lager on tap.',b:[],img:'beer'}];
 const CATS=['Ethiopian','International','Coffee and tea','Juice and drinks'];
 const BADGE={fast:['b-fast','Fasting'],hot:['b-hot','Spicy'],fav:['b-fav','House favourite']};
-function glass(layers,foam,h=120){let y=170,o=`<path d="M70 50 L82 170 L118 170 L130 50 Z" fill="#ffffff" opacity=".35"/>`;const tot=layers.reduce((s,l)=>s+l[1],0);layers.forEach(([c,f])=>{const hh=h*f/tot,y2=y-hh,w1=12*(170-y)/120,w2=12*(170-y2)/120;o+=`<path d="M${82-w1} ${y} L${118+w1} ${y} L${118+w2} ${y2} L${82-w2} ${y2} Z" fill="${c}"/>`;y=y2});if(foam)o+=`<ellipse cx="100" cy="${y}" rx="${30+12*(170-y)/120*0}" ry="7" fill="${foam}"/>`;return o+`<path d="M70 50 L82 170 L118 170 L130 50" fill="none" stroke="#9b8576" stroke-width="3"/>`}
-function art(m){seed=m.p+m.n.length*31;let g='';
- if(Array.isArray(m.art)){g+=`<circle cx="100" cy="72" r="68" fill="#efe6da"/>`+injera(100,72,60,90);const k=m.art,pos=k.length===1?[[100,72,34]]:k.length<=3?[[78,60,24],[124,64,22],[98,100,20]]:[[72,52,20],[124,48,20],[138,92,18],[96,104,20],[100,74,16]];k.forEach((s,i)=>{const[x,y,r]=pos[i%pos.length];g+=s==='egg'?`<ellipse cx="${x}" cy="${y}" rx="${r*.8}" ry="${r*.6}" fill="#fbf7ee"/><circle cx="${x}" cy="${y}" r="${r*.32}" fill="#f0b429"/>`:stew(s,x,y,r)});if(m.n.startsWith('Shiro'))g=`<circle cx="100" cy="74" r="60" fill="#3a2418"/><circle cx="100" cy="74" r="52" fill="#5a3826"/>`+stew('shiro',100,74,44)+specks(100,74,30,'#f3c98a',8,2)}
- else if(['burger','pasta','club','pastaV'].includes(m.art)){g+=`<circle cx="100" cy="74" r="66" fill="#f4efe8"/><circle cx="100" cy="74" r="58" fill="none" stroke="#e1d6c8" stroke-width="2"/>`;
-  if(m.art==='burger'){g+=`<circle cx="86" cy="72" r="36" fill="#c98a3c"/>`+specks(86,66,24,'#f6e7c4',12,2)+[0,1,2,3,4,5].map(i=>`<rect x="${122+i*4}" y="${48+i*7}" width="30" height="8" rx="3" fill="#e8b54a" transform="rotate(${-20+i*8} 136 ${52+i*7})"/>`).join('')}
-  else if(m.art==='club'){g+=`<path d="M48 104 L100 40 L100 104 Z" fill="#e9c99a" stroke="#c99a5c" stroke-width="3"/><path d="M104 104 L104 40 L156 104 Z" fill="#e9c99a" stroke="#c99a5c" stroke-width="3"/><path d="M56 98 L98 48" stroke="#5a9a38" stroke-width="4"/><path d="M110 96 L110 52" stroke="#d23b26" stroke-width="4"/>`}
-  else{const col=m.art==='pasta'?'#b8361e':'#d65a2a';for(let i=0;i<9;i++)g+=`<path d="M${70+rnd()*20} ${50+rnd()*40} q${20+rnd()*20} ${-14+rnd()*28} ${40+rnd()*20} ${-6+rnd()*12}" stroke="#f0d48a" stroke-width="5" fill="none" stroke-linecap="round"/>`;g+=blob(100,72,26,col)+specks(100,72,18,m.art==='pasta'?'#7a1f10':'#3f8a3a',8,3)}}
- else{g+=`<ellipse cx="100" cy="172" rx="44" ry="6" fill="rgba(0,0,0,.12)"/>`;
-  const G={buna:()=>`<path d="M74 110 L82 168 L118 168 L126 110 Z" fill="#fbf7ee" stroke="#9b8576" stroke-width="3"/><ellipse cx="100" cy="112" rx="26" ry="6" fill="#3a1f12"/><path d="M84 122 h32" stroke="#2f6b3a" stroke-width="3"/>`,mac:()=>glass([['#5a3220',2],['#b07a4f',2],['#e8d2b4',1.4]],'#fbf3e4',96),shai:()=>glass([['#b5531c',3]],null,90),avo:()=>glass([['#8fb13d',3]],'#b8cf6e',110),spris:()=>glass([['#8fb13d',1.2],['#f1a82b',1],['#e56a3a',1]],null,112),water:()=>glass([['#cfe6ee',3]],null,104)+specks(100,120,14,'#ffffff',8,2),beer:()=>glass([['#e0a127',3]],'#fbf7ee',100)};g+=G[m.art]()}
- return `<svg viewBox="0 0 200 180" aria-hidden="true">${g}</svg>`}
-let cat='Ethiopian';
-const fastOnly=$('#fastOnly');
+const bd=m=>`<div class="badges">${m.b.map(x=>`<span class="b ${BADGE[x][0]}">${BADGE[x][1]}</span>`).join('')}</div>`;
+let cat='Ethiopian';const fastOnly=$('#fastOnly');
 function menu(){$('#tabs').innerHTML=CATS.map(c=>`<button class="tab" role="tab" aria-selected="${c===cat}" data-c="${c}">${c}</button>`).join('');
- const list=MENU.filter(m=>m.c===cat&&(!fastOnly.checked||m.b.includes('fast')));
- $('#dishes').innerHTML=list.map(m=>`<article class="dish"><div class="pic">${art(m)}</div><div class="top"><h3>${m.n}</h3><span class="pr">${br(m.p)}</span></div><p>${m.a?`<span class="am amn">${m.a}</span>`:''}</p><p>${m.d}</p><div class="badges">${m.b.map(x=>`<span class="b ${BADGE[x][0]}">${BADGE[x][1]}</span>`).join('')}</div></article>`).join('')||'<p class="empty">No fasting dishes in this section. Try Ethiopian or the drinks.</p>'}
+ const list=MENU.filter(m=>m.c===cat&&(!fastOnly.checked||m.b.includes('fast'))),withP=list.filter(m=>m.img),noP=list.filter(m=>!m.img);
+ $('#dishes').innerHTML=withP.map(m=>`<article class="dish">${ph(m.img,m.n)}<div class="top"><h3>${m.n}</h3><span class="pr">${br(m.p)}</span></div><p>${m.a?`<span class="am amn">${m.a}</span>`:''}</p><p>${m.d}</p>${bd(m)}</article>`).join('');
+ $('#plist').innerHTML=noP.length?`<div class="plist"><h3>${withP.length?'Also from the kitchen':''}</h3>${noP.map(m=>`<div class="pi"><b>${m.n} <span class="am amn">${m.a||''}</span></b><span class="pr">${br(m.p)}</span><p>${m.d}</p>${bd(m)}</div>`).join('')}</div>`:(list.length?'':'<p class="empty">No fasting dishes in this section. Try Ethiopian or the drinks.</p>');
+ fill($('#menu'))}
 $('#tabs').addEventListener('click',e=>{const b=e.target.closest('[data-c]');if(b){cat=b.dataset.c;menu()}});
 fastOnly.addEventListener('change',menu);
 
-/* time in Addis */
 const parts=Object.fromEntries(new Intl.DateTimeFormat('en-GB',{timeZone:'Africa/Addis_Ababa',weekday:'long',hour:'2-digit',minute:'2-digit',hourCycle:'h23'}).formatToParts(new Date()).map(p=>[p.type,p.value]));
 const mins=+parts.hour*60+ +parts.minute,isOpen=mins>=420&&mins<1380;
 $('#openTxt').textContent=isOpen?`Open now · until 23:00 · ${parts.weekday}`:'Closed now · opens at 07:00';
@@ -303,23 +333,12 @@ if(!isOpen)$('#open').classList.add('closed');
 if(parts.weekday==='Wednesday'||parts.weekday==='Friday'){$('#fastday').innerHTML=`<p class="fastday">Today is ${parts.weekday}, a fasting day. Every dish marked Fasting has no meat, dairy or eggs.</p>`;fastOnly.checked=true}
 menu();
 
-/* coffee ceremony */
-(function(){let g=`<rect x="0" y="330" width="520" height="110" fill="#2a1a12"/>`;seed=5;for(let i=0;i<90;i++){const x=rnd()*520,y=335+rnd()*100;g+=`<path d="M${x.toFixed(0)} ${y.toFixed(0)} l${(-6+rnd()*12).toFixed(0)} -18" stroke="${rnd()>.5?'#3f6b2a':'#5c8a3a'}" stroke-width="3" stroke-linecap="round"/>`}
- g+=`<ellipse cx="350" cy="372" rx="150" ry="26" fill="#6b3f22"/><ellipse cx="350" cy="364" rx="150" ry="26" fill="#8a5530"/>`;
- [[270,330],[310,338],[350,342],[390,338],[430,330],[330,312],[370,312]].forEach(([x,y])=>{g+=`<path d="M${x-17} ${y-26} L${x-12} ${y} L${x+12} ${y} L${x+17} ${y-26} Z" fill="#fbf7ee"/><ellipse cx="${x}" cy="${y-26}" rx="17" ry="4" fill="#3a1f12"/><path d="M${x-14} ${y-14} h28" stroke="#c8321c" stroke-width="2"/>`});
- g+=`<ellipse cx="140" cy="352" rx="78" ry="14" fill="rgba(0,0,0,.35)"/><path d="M140 140 C110 140 108 175 118 200 C70 220 58 300 92 340 L188 340 C222 300 210 220 162 200 C172 175 170 140 140 140 Z" fill="#5a3422"/><path d="M98 330 C70 290 84 230 126 210" stroke="#8a5530" stroke-width="10" fill="none" stroke-linecap="round"/>`;
- g+=`<path d="M180 230 Q228 206 236 168" stroke="#5a3422" stroke-width="16" fill="none" stroke-linecap="round"/><path d="M118 214 Q78 236 86 282" stroke="#5a3422" stroke-width="12" fill="none" stroke-linecap="round"/><ellipse cx="140" cy="142" rx="22" ry="7" fill="#3a2418"/><path d="M128 142 h24 v-20 h-24z" fill="#c8a06a"/><path d="M132 122 q8 -14 16 0" fill="#d8b98e"/>`;
- g+=`<g id="steam" fill="none" stroke="#f6ede4" stroke-width="4" stroke-linecap="round" opacity=".7">${[0,1,2].map(i=>`<path d="M${226+i*10} ${150-i*4} q-12 -20 0 -40 q12 -20 0 -40" style="animation:rise 3s ${i*.9}s ease-in-out infinite"/>`).join('')}</g>`;
- g+=`<rect x="410" y="250" width="22" height="80" rx="4" fill="#6b3f22"/><ellipse cx="421" cy="250" rx="30" ry="9" fill="#8a5530"/>`+specks(421,240,16,'#f6ede4',14,4)+`<path d="M450 300 q8 -30 -6 -60 q-10 -20 4 -50" stroke="#cdbcae" stroke-width="2" fill="none" opacity=".5"/>`;
- $('#cer').innerHTML=g})();
-
-/* events */
-const EV=[['Every Thursday · 19:30','Masinko and krar night','Live traditional music in the main room, with a dance floor once the second set starts. Booking strongly advised.','Thursday music night','#8e1f4a','music'],['Every Sunday · 09:00 to 13:00','Family breakfast','Chechebsa, firfir, fresh juice and buna. Children under six eat free from the breakfast menu.','Sunday breakfast','#e7a823','sun'],['Any day · up to 24 guests','The private room','Birthdays, graduations and company lunches with a set menu and your own coffee ceremony.','Private room','#2f6b3a','room']];
-function evArt(col,kind){seed=kind.length*7;let g=`<rect width="400" height="150" fill="${col}"/>`;if(kind==='music'){for(let i=0;i<14;i++)g+=`<circle cx="${(rnd()*400).toFixed(0)}" cy="${(rnd()*150).toFixed(0)}" r="${(2+rnd()*3).toFixed(1)}" fill="#f6ede4" opacity=".5"/>`;g+=`<path d="M170 128 L200 40 L230 128 Z" fill="#f6ede4" opacity=".92"/><rect x="196" y="12" width="8" height="40" fill="#f6ede4"/><path d="M200 18 L170 30" stroke="#f6ede4" stroke-width="3"/><path d="M90 140 Q150 60 210 140" stroke="#e7a823" stroke-width="4" fill="none"/><path d="M250 130 Q290 70 330 130" stroke="#e7a823" stroke-width="4" fill="none"/>`}
- else if(kind==='sun'){g+=`<circle cx="200" cy="150" r="70" fill="#fbeccb"/>`+[...Array(9)].map((_,i)=>{const a=Math.PI+(i+.5)/9*Math.PI;return `<line x1="${200+86*Math.cos(a)}" y1="${150+86*Math.sin(a)}" x2="${200+112*Math.cos(a)}" y2="${150+112*Math.sin(a)}" stroke="#fbeccb" stroke-width="6" stroke-linecap="round"/>`}).join('')}
- else{g+=`<ellipse cx="200" cy="96" rx="150" ry="36" fill="#244f2c"/><ellipse cx="200" cy="90" rx="150" ry="36" fill="#e2bd6e"/>`+[...Array(10)].map((_,i)=>{const a=i/10*Math.PI*2;return `<circle cx="${(200+170*Math.cos(a)).toFixed(0)}" cy="${(90+50*Math.sin(a)).toFixed(0)}" r="12" fill="#f6ede4"/>`}).join('')}return `<svg viewBox="0 0 400 150" preserveAspectRatio="xMidYMid slice" aria-hidden="true">${g}</svg>`}
-$('#evs').innerHTML=EV.map((e,i)=>`<article class="ev"><div class="art">${evArt(e[4],e[5])}</div><div class="body"><span class="day">${e[0]}</span><h3>${e[1]}</h3><p>${e[2]}</p><a class="btn" href="#book" data-ev="${i}">Book for this</a></div></article>`).join('');
-$('#evs').addEventListener('click',e=>{const a=e.target.closest('[data-ev]');if(!a)return;const nt=$('#nt');if(nt){nt.value=EV[+a.dataset.ev][3]+'. ';if(a.dataset.ev==='2')$('#gs').value='12'}});
+const EV=[['Every Thursday · 19:30','Music night','Live Ethiopian music and dancers in the main room, with a dance floor once the second set starts. Booking strongly advised.','Thursday music night','music'],['Every Sunday · 09:00 to 13:00','Family breakfast','Eggs, firfir, fresh juice and buna. Children under six eat free from the breakfast menu.','Sunday breakfast','breakfast'],['Any day · up to 24 guests','The private room','Birthdays, graduations and company lunches with a set menu and your own coffee ceremony.','Private room','room']];
+$('#evs').innerHTML=EV.map((e,i)=>`<article class="ev">${ph(e[4],e[1])}<div class="body"><span class="day">${e[0]}</span><h3>${e[1]}</h3><p>${e[2]}</p><a class="btn" href="#book" data-ev="${i}">Book for this</a></div></article>`).join('');
+$('#evs').addEventListener('click',e=>{const a=e.target.closest('[data-ev]');if(!a)return;$('#nt').value=EV[+a.dataset.ev][3]+'. ';if(a.dataset.ev==='2')$('#gs').value='12'});
+fill();
+const un=[...new Set(Object.values(IMG).filter(v=>v[2]==='u').map(v=>v[1]))],wp=[...new Set(Object.values(IMG).filter(v=>v[2]==='w').map(v=>v[1]))];
+$('#credits').textContent=`Photos from Unsplash by ${un.join(', ')}. Injera and tibs photos from WordPress Photos (CC0) by ${wp.join(' and ')}.`;
 
 /* booking */
 const tm=$('#tm'),gs=$('#gs'),dt=$('#dt');
